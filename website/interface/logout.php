@@ -1,9 +1,8 @@
 <?php
 
-require('../core/core_func.php'); 
+require_once('config.php'); 
+require_once(VJ_CORE); 
 
-include('proc_logout.php'); 
-
-vj_util_navigate('index.php'); 
+vj_util_navigate('proc_logout.php');
 
 ?>

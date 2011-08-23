@@ -1,6 +1,7 @@
 <?php
 
-require('../core/core_func.php'); 
+require_once('config.php'); 
+require_once(VJ_CORE); 
 
 $ERRMSG = $_GET['errmsg'];
 $TITLE = 'Fatal Error'; 

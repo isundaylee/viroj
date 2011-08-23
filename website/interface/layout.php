@@ -1,3 +1,9 @@
+<?php
+
+require_once('config.php'); 
+require_once(VJ_CORE); 
+
+?>
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="style/layout.css">

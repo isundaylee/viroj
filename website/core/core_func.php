@@ -99,6 +99,29 @@ function vj_logout($error_handler = 'vj_error')
      setcookie('vj_username', ''); 
 }
 
+function vj_register($username, $password, $error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler); 
+     
+     $exp = 'SELECT * FROM ' . VJ_DB_PREFIX . 'accounts WHERE username = "' . $username . '";';
+
+     $result = mysql_query($exp); 
+
+     if ($row = mysql_fetch_array($result))
+     {
+          call_user_func($error_handler, 'User with the same username exists. '); 
+     }
+
+     $exp = "INSERT INTO " . VJ_DB_PREFIX . 'accounts (username, password) VALUES ("' . $username . '", "' . $password . '"); ';
+
+     $result = mysql_query($exp); 
+
+     if (!$result)
+     {
+          call_user_func($error_handler, 'Error inserting entry into database. '); 
+     }
+}
+
 function vj_get_username()
 {
      return $_COOKIE['vj_username']; 
@@ -141,6 +164,35 @@ function vj_valid_username($username)
 function vj_valid_password($password)
 {
      return vj_valid_letter_num_lines($password); 
+}
+
+function vj_get_tasks_num($error_handler)
+{
+     $con = vj_get_connection($error_handler); 
+
+     $exp = "SELECT * FROM " . VJ_DB_PREFIX . 'tasks;'; 
+
+     $result = mysql_num_rows(mysql_query($exp)); 
+     
+     return $result; 
+}
+
+function vj_get_tasks($lb, $ub, $error_handler)
+{
+     $con = vj_get_connection($error_handler); 
+     
+     $exp = "SELECT * FROM " . VJ_DB_PREFIX . 'tasks' . " WHERE tid >= $lb AND tid <= $ub; "; 
+
+     $result = mysql_query($exp);
+     $num = 0; 
+
+     while ($row = mysql_fetch_array($result))
+     {
+          ++$num; 
+          $ans[$num] = $row; 
+     }
+
+     return $ans; 
 }
 
 ?>
