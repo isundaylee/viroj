@@ -1,0 +1,28 @@
+.mtitle {
+    text-align: center; 
+    font-family: Georgia, sans-serif; 
+    font-size: 40px; 
+}
+
+.subtitle {
+    text-align: center;
+    font-family: Georgia, sans-serif; 
+    font-size: 20px; 
+}
+
+.navibar {
+    font-family: Georgia, sans-serif; 
+    font-size: 15px; 
+    margin-bottom: 100px; 
+}
+
+.maintainer {
+    font-family: Georgia, sans-serif; 
+    font-size: 12px; 
+    text-align: center; 
+}
+
+body {
+    margin: 0 auto;
+    width: 800px; 
+}
