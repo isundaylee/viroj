@@ -1,7 +1,7 @@
 <html>
   <head>
     <link rel="stylesheet" type="text/css" href="style/layout.css">
-    <title><?php echo 'VIROJ - ' . $TITLE; ?></title>
+      <title><?php echo 'VIROJ - ' . $TITLE . ' (' . vj_get_filtered_username() . ')'; ?></title>
   </head>
   
   <body>
