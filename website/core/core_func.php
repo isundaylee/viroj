@@ -466,8 +466,19 @@ function vj_get_submit_report_by_sid($sid, $error_handler = 'vj_error')
 
 function vj_get_result_description($id)
 {
-     if ($id == 0) return 'AC'; 
-     else if ($id == 1) return 'WA'; 
+     switch ($id)
+     {
+     case 0: return 'AC'; 
+     case 1: return 'CE'; 
+     case 2: return 'CTLE'; 
+     case 5: return 'SLLE'; 
+     case 6: return 'RE'; 
+     case 7: return 'TLE'; 
+     case 8: return 'MLE';
+     case 9: return 'WA'; 
+     case 10: return 'OLE'; 
+     case 11: return 'PE'; 
+     }
 }
 
 function vj_valid_result_name($file)
