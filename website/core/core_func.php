@@ -205,7 +205,7 @@ function vj_valid_password($password)
      return vj_valid_letter_num_lines($password); 
 }
 
-function vj_get_tasks_num($error_handler)
+function vj_get_tasks_num($error_handler = 'vj_error')
 {
      $con = vj_get_connection($error_handler); 
 
@@ -216,11 +216,22 @@ function vj_get_tasks_num($error_handler)
      return $result; 
 }
 
+function vj_get_submits_num($error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler);
+
+     $exp = "SELECT * FROM " . VJ_DB_PREFIX . 'submits;'; 
+
+     $result = mysql_num_rows(mysql_query($exp)); 
+
+     return $result; 
+}
+
 function vj_get_tasks($lb, $ub, $error_handler)
 {
      $con = vj_get_connection($error_handler); 
      
-     $exp = "SELECT * FROM " . VJ_DB_PREFIX . 'tasks' . " WHERE tid >= $lb AND tid <= $ub; "; 
+     $exp = "SELECT * FROM " . VJ_DB_PREFIX . 'tasks' . " ORDER BY tid ASC LIMIT " . ($lb - 1) . ', ' . ($ub - $lb + 1) . ';';  
 
      $result = mysql_query($exp);
      $num = 0; 
@@ -254,7 +265,12 @@ function vj_get_task_detail_by_tid($tid, $error_handler = 'vj_error')
 
      $taskroot = VJ_TASKDIR . $name . '/';
 
-     if (!file_exists($taskroot . 'desc.txt'))
+     if (!file_exists($taskroot . 'desc.txt') ||
+         !file_exists($taskroot . 'input.txt') ||
+         !file_exists($taskroot . 'output.txt') ||
+         !file_exists($taskroot . 'sinput.txt') ||
+         !file_exists($taskroot . 'soutput.txt') ||
+         !file_exists($taskroot . 'limit.txt'))
      {
           call_user_func($error_handler, "Task's files not complete. Please check it. "); 
           return; 
@@ -324,6 +340,47 @@ function vj_submit_classic($code, $tid, $ext, $error_handler = 'vj_error')
      }
 
      fwrite($fp, $code); 
+     fclose($fp); 
+     
+     vj_write_request_file($name, $sid, $ext, $error_handler); 
+}
+
+function vj_write_request_file($name, $sid, $type, $error_handler = 'vj_error')
+{
+     $filename = VJ_TASKDIR . $name . '/.conf'; 
+     $req_name = VJ_REQUESTS_DIR . $sid . '.req'; 
+
+     $fp = fopen($filename, "r"); 
+     $freq = fopen($req_name, "w"); 
+
+     if (!$fp)
+     {
+          call_user_func($error_handler, "Can't open task's config file. "); 
+          return; 
+     }
+
+     if (!$freq)
+     {
+          call_user_func($error_handler, "Can't open request file"); 
+          return; 
+     }
+
+     fprintf($freq, "source=%s\n", VJ_SOURCE_AS_JUDGER . $sid . "." . $type);
+     fprintf($freq, "lang=%s\n", $type); 
+
+     while (!feof($fp))
+     {
+          $line = fgets($fp); 
+          if (strpos($line, "=") != false)
+          {
+               fwrite($freq, $line); 
+          }
+          else
+          {
+               sscanf($line, "%f%f%s%s", $tlimit, $mlimit, $infile, $oufile); 
+               fprintf($freq, "%f %f %s %s\n", $tlimit, $mlimit, VJ_TASKDIR_AS_JUDGER . $name . "/" . $infile, VJ_TASKDIR_AS_JUDGER . $name . "/" . $oufile); 
+          }
+     }
 }
 
 function vj_get_source_types()
@@ -333,6 +390,113 @@ function vj_get_source_types()
      $types['pas'] = 'Pascal'; 
 
      return $types; 
+}
+
+function vj_get_submits($lb, $ub, $error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler); 
+
+     $exp = "SELECT * FROM " . VJ_DB_PREFIX . "submits ORDER BY sid DESC LIMIT " . ($lb - 1) . ", " . ($ub - $lb + 1) . ";";
+
+     $result = mysql_query($exp);
+
+     if (!$result)
+     {
+          call_user_func($error_handler, "Can't do query. "); 
+          return; 
+     }
+
+     $num = 0; 
+     while ($row = mysql_fetch_array($result))
+     {
+          $num++;
+          $ans[$num] = $row['sid']; 
+     }
+
+     $ans[0] = $num; 
+
+     return $ans;
+}
+
+function vj_get_submit_detail_by_sid($sid, $error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler);
+
+     $exp = "SELECT * FROM " . VJ_DB_PREFIX . "submits WHERE sid = " . $sid . ";";
+
+     $result = mysql_query($exp); 
+
+     if (!($row = mysql_fetch_array($result)))
+     {
+          call_user_func($error_handler, 'SID not valid. '); 
+          return; 
+     }
+
+     return $row; 
+}
+
+function vj_is_judged($sid, $error_handler)
+{
+     return (file_exists(VJ_REPORTS_DIR . $sid . '.rep')); 
+}
+
+function vj_get_submit_report_by_sid($sid, $error_handler = 'vj_error')
+{
+     $filename = VJ_REPORTS_DIR . $sid . '.rep'; 
+
+     $fp = fopen($filename, "r"); 
+
+     if (!$fp)
+     {
+          call_user_func($error_handler, "Can't open report file. "); 
+          return; 
+     }
+
+     fscanf($fp, "%s", $type); 
+
+     $ans['type'] = $type; 
+
+     if ($type == 'acm')
+     {
+          fscanf($fp, "%d%d%d%d", $ans['rescode'], $ans['time'], $ans['memory'], $ans['wrongid']);
+     }
+
+     return $ans; 
+}
+
+function vj_get_result_description($id)
+{
+     if ($id == 0) return 'AC'; 
+     else if ($id == 1) return 'WA'; 
+}
+
+function vj_valid_result_name($file)
+{
+     if (preg_match('/^[0-9]*.res$/', $file, $arr))
+     {
+          return substr($arr[0], 0, -4); 
+     }
+     return false; 
+}
+
+function vj_collect_results($error_handler = 'vj_error')
+{
+     $handle = opendir(VJ_RESULTS_DIR); 
+
+     while ($file = readdir($handle))
+     {
+          if ($id = vj_valid_result_name($file))
+          {
+               $src = VJ_RESULTS_DIR . $id . '.res'; 
+               $dest = VJ_REPORTS_DIR . $id . '.rep';
+               if (!copy($src, $dest))
+               {
+                    call_user_func($error_handler, 'Fail to collect result files completely. '); 
+                    return; 
+               }
+               unlink($src); 
+          }
+     }
 }
 
 ?>

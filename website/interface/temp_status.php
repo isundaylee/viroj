@@ -8,6 +8,8 @@ function status_error_handler($msg)
      vj_error($msg); 
 }
 
+vj_collect_results('status_error_handler'); 
+
 if ($_GET['page'] == '') $page = 1; 
 else $page = $_GET['page']; 
 
