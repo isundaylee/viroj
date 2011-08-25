@@ -22,7 +22,7 @@ int main(int argc, char *argv[])
 
      system(cmd.c_str()); 
 
-     fprintf(fp, "acm\n9 121000 5340000 13\n");
+     fprintf(fp, "acm\n0 1210 5340 0\n");
 
      fclose(fp); 
 

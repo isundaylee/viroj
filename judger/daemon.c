@@ -65,11 +65,9 @@ int work()
           ret = 1; 
           name[strlen(name) - 1] = 0; 
           if (0 == valid(name)) continue; 
-          printf("%s\n", name);
           strcpy(cmd, "./fake_judger "); 
           name[strlen(name) - 4] = 0;
           strcat(cmd, name); 
-          printf("%s\n", cmd); 
           system(cmd); 
           break; 
      }
@@ -83,9 +81,9 @@ int main()
 {
      FILE *fp; 
 
-     // signal(SIGCHLD, SIG_IGN);
+     signal(SIGCHLD, SIG_IGN);
 
-     // init_daemon();
+     init_daemon();
 
      fp = fopen("judger_daemon.log", "a"); 
 
@@ -98,7 +96,7 @@ int main()
           strcat(cmd, reqdir); 
           strcat(cmd, " >> judger_daemon.tmp"); 
           system(cmd); 
-          if (0 == work()) sleep(3); 
+          if (0 == work()) sleep(1); 
      }
 
      return 0; 
