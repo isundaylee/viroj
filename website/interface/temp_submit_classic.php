@@ -10,7 +10,23 @@ $width = VJ_SUBFRAME_WIDTH;
 ?>
 
 <div style="text-align: center; margin:auto; width: <?php echo $width; ?>; ">
-<form action="proc_submit_classic.php" method="post">
+
+<?php
+
+if ($_GET['errmsg'] != '')
+{
+     echo '<div style="color: red; text-align: center; ' . $style . '">'; 
+     echo 'Error: ' . $_GET['errmsg']; 
+     echo '</div>'; 
+     echo '<hr />';
+}
+
+?>
+
+<form style="<?php echo $style; ?>" action="proc_submit_classic.php" method="post">
+  Problem ID: 
+  <input type="text" name="tid" value="<?php echo $tid; ?>" />
+  Language: 
   <select name="codetype">
   <?php
      $list = vj_get_source_types(); 

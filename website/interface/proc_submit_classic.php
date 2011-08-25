@@ -1,12 +1,31 @@
 <?php
 
-$fp = fopen("test.cpp", "w"); 
+require_once('config.php'); 
+require_once(VJ_CORE); 
 
-if (!$fp)
+$tid = $_POST['tid']; 
+$code = $_POST['code']; 
+$type = $_POST['codetype'];
+
+function submit_classic_error_handler($msg)
 {
-     echo 'Wrong!'; 
+     vj_error_navigate('submit_classic.php', $msg); 
 }
 
-fwrite($fp, $_POST['code']); 
+if (!is_numeric($tid))
+{
+     submit_classic_error_handler('TID not numeric. '); 
+     return; 
+}
+
+if (!vj_valid_tid($tid))
+{
+     submit_classic_error_handler('TID not valid. '); 
+     return; 
+}
+
+vj_submit_classic($code, $tid, $type, 'submit_classic_error_handler'); 
+
+vj_util_navigate('status.php'); 
 
 ?>

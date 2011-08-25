@@ -2,6 +2,24 @@
 
 require('../core/config.php');
 
+function vj_valid_tid($tid, $error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler); 
+
+     $exp = "SELECT * FROM " . VJ_DB_PREFIX . "tasks WHERE tid = $tid; ";
+     
+     $result = mysql_query($exp); 
+
+     if ($row = mysql_fetch_array($result))
+     {
+          return true; 
+     }
+     else
+     {
+          return false; 
+     }
+}
+
 function vj_get_connection($error_handler = 'vj_error')
 {
      $con = mysql_connect(VJ_DB_HOST, VJ_DB_USERNAME, VJ_DB_PASSWORD);
@@ -265,7 +283,7 @@ function vj_valid_source_name($str)
      }
 }
 
-function vj_submit($code, $tid, $ext, $error_handler = 'vj_error')
+function vj_submit_classic($code, $tid, $ext, $error_handler = 'vj_error')
 {
      $con = vj_get_connection(error_handler); 
 
