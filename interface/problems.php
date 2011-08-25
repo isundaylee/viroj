@@ -17,6 +17,8 @@ $tot_pages = floor(($num - 1) / VJ_TASKS_PER_PAGE) + 1;
 
 if ($page > $tot_pages)
 {
+     problems_error_handler('Page number out of range. '); 
+     return; 
 }
 
 $lb = VJ_TASKS_PER_PAGE * ($page - 1) + 1;

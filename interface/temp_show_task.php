@@ -55,6 +55,12 @@ $width = VJ_SUBFRAME_WIDTH;
 <div style="<?php echo $style; ?>"><?php echo $task['limit']; ?></div>
 </div>
 
-&nbsp; <br />
+&nbsp; <br /><hr />
+
+<div style="text-align: center; <?php echo $style; ?>">
+<a href="submit_classic.php?tid=<?php echo $tid; ?>">
+Submit
+</a>
+</div>
 
 </div>

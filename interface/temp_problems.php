@@ -3,6 +3,12 @@
 require_once('config.php'); 
 require_once(VJ_CORE);
 
+$W1 = '100px'; 
+$W2 = '100px'; 
+$W3 = '400px'; 
+$W4 = '100px'; 
+$W5 = '100px'; 
+
 ?>
 
 <div style="margin: auto; width: <?php echo VJ_SUBFRAME_WIDTH; ?>; ">
@@ -25,20 +31,33 @@ echo '</div>';
 ?>
 <hr />
 <table style="margin: auto; ">
+  <tr>
+    <th>TID</th>
+    <th>Name</th>
+    <th>Title</th>
+    <th>Submits</th>
+    <th>AC Submits</th>
+  </tr>
   <?php
      $style = VJ_CONTENT_STYLE; 
      foreach ($tasks as $task)
      {
           echo '<tr>'; 
-          echo '<td style="' . $style . ' text-align: center; width: 50px; ">'; 
+          echo "<td style='$style; text-align: center; width: $W1; '>"; 
           echo $task['tid']; 
           echo '</td>';
-          echo '<td style="' . $style . ' text-align: center; width: 100px; ">';
+          echo "<td style='$style; text-align: center; width: $W2; '>";
           echo $task['name']; 
           echo '</td>'; 
-          echo '<td style="' . $style . 'text-align: center; width: 450px; ">';
+	  echo "<td style='$style; text-align: center; width: $W3; '>";
           echo '<a href="show_task.php?tid=' . $task['tid'] . '">' . $task['title'] . '</a>'; 
           echo '</td>'; 
+	  echo "<td style='$style; text-align: center; width: $W4; '>"; 
+	  echo vj_get_submits_num_by_tid($task['tid']);  
+	  echo "</td>"; 
+	  echo "<td style='$style; text-align: center; width: $W5; '>";
+	  echo vj_get_ac_submits_num_by_tid($task['tid']);;
+	  echo "</td>"; 
           echo '</tr>'; 
      }
   ?>

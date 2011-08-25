@@ -3,6 +3,8 @@
 require_once('config.php'); 
 require_once(VJ_CORE); 
 
+$width = VJ_PAGE_WIDTH; 
+
 ?>
 <html>
   <head>
@@ -12,7 +14,7 @@ require_once(VJ_CORE);
   </head>
   
   <body>
-    <div style="margin: 0px; width: 800px; ">
+    <div style="margin: auto; width: <?php echo $width; ?>; ">
     <hr />
     <div class="mtitle">Welcome to VIROJ</div>
     <div class="subtitle">An open-source Online Judge system for all OIers. </div>

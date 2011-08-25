@@ -54,19 +54,29 @@ int valid(char *name)
      return 1; 
 }
 
-void work()
+int work()
 {
+     int ret = 0; 
      char name[200]; 
      FILE *ft = fopen("judger_daemon.tmp", "r");
 
      while (fgets(name, 10000, ft) != NULL)
      {
+          ret = 1; 
           name[strlen(name) - 1] = 0; 
           if (0 == valid(name)) continue; 
-          printf("%s\n", name); 
+          printf("%s\n", name);
+          strcpy(cmd, "./fake_judger "); 
+          name[strlen(name) - 4] = 0;
+          strcat(cmd, name); 
+          printf("%s\n", cmd); 
+          system(cmd); 
+          break; 
      }
 
      fclose(ft); 
+
+     return ret; 
 }
 
 int main()
@@ -88,8 +98,7 @@ int main()
           strcat(cmd, reqdir); 
           strcat(cmd, " >> judger_daemon.tmp"); 
           system(cmd); 
-          work(); 
-          sleep(3); 
+          if (0 == work()) sleep(3); 
      }
 
      return 0; 

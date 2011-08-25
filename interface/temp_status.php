@@ -29,6 +29,13 @@ if ($page > $tot_pages)
      status_error_handler('Page number out of range. '); 
 }
 
+$W1 = '50px'; 
+$W2 = '250px'; 
+$W3 = '250px'; 
+$W4 = '70px';
+$W5 = '90px'; 
+$W6 = '90px'; 
+
 ?>
 
 <div style="margin: auto; width: <?php echo $width; ?>; ">
@@ -46,27 +53,37 @@ echo '</div>';
 <hr />
 
 <table style="text-align: center; <?php echo $style; ?>">
+
+<tr>
+<th>SID</th>
+<th>Title</th>
+<th>Status</th>
+<th>Case ID</th>
+<th>Time</th>
+<th>Memory</th>
+</tr>
+
 <?php
      for ($i=1; $i<=$len; $i++)
      {
           echo '<tr>';
-          echo '<td style="width: 60px; ">';
+          echo "<td style='width: $W1; '>";
           echo $submits[$i]; 
           echo '</td>'; 
-          echo '<td style="width: 240px; ">';
+          echo "<td style='width: $W2; '>";
           $submit = vj_get_submit_detail_by_sid($submits[$i], 'status_error_handler'); 
           $task = vj_get_task_detail_by_tid($submit['tid']); 
           echo '<a href="show_task.php?tid=' . $submit['tid'] . '">'; 
           echo $task['title']; 
           echo '</a>'; 
           echo '</td>';
-          echo '<td style="width: 100px; ">';
+          echo "<td style='width: $W3; '>";
           if (!vj_is_judged($submits[$i]))
           {
                echo '<div style="color: ' .   VJ_STATUS_COLOR_PENDING . ';">'; 
                echo 'Pending';
                echo '</div>'; 
-               echo '</td><td style="width: 40px; ">&nbsp;</td><td style="width: 80px; ">&nbsp; </td><td style="width: 80px; ">&nbsp; </td>'; 
+               echo "</td><td style='width: $W4; '>&nbsp;</td><td style='width: $W5; '>&nbsp; </td><td style='width: $W6; '>&nbsp; </td>"; 
           }
           else
           {
@@ -74,17 +91,23 @@ echo '</div>';
                $status = vj_get_result_description($report['rescode']); 
                $display = get_full_description($status); 
                $color = get_display_color($status); 
+
+               if ($status == 'CE')
+               {
+                    $display = "<a href='show_ce_detail_classic.php?sid=$submits[$i]'>$display</a>"; 
+               }
+
                echo '<div style="color: ' . $color . '; ">';
                echo $display; 
                echo '</div>'; 
                echo '</td>';
-               echo '<td style="width: 40px; ">';
+               echo "<td style='width: $W4; '>";
                if ($status != 'AC') echo $report['wrongid']; 
                echo '</td>'; 
-               echo '<td style="width: 80px; ">'; 
+               echo "<td style='width: $W5; '>"; 
                echo $report['time'] . ' MS'; 
                echo '</td>'; 
-               echo '<td style="width: 80px; ">'; 
+               echo "<td style='width: $W6; '>"; 
                echo $report['memory'] . ' KB'; 
                echo '</td>'; 
           }

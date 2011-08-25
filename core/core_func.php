@@ -506,8 +506,88 @@ function vj_collect_results($error_handler = 'vj_error')
                     return; 
                }
                unlink($src); 
+               if (file_exists(VJ_RESULTS_DIR . $id . '.cmp'))
+               {
+                    $src = VJ_RESULTS_DIR . $id . '.cmp'; 
+                    $dest = VJ_REPORTS_DIR . $id . '.cmp'; 
+                    if (!copy($src, $dest))
+                    {
+                         call_user_func($error_handler, 'Fail to collect result files completely. '); 
+                    }
+                    unlink($src); 
+               }
+               $report = vj_get_submit_report_by_sid($id, $error_handler); 
+
+               if (vj_code_is_ac($report['rescode']))
+               {
+                    $con = vj_get_connection($error_handler); 
+
+                    $exp = "INSERT INTO " . VJ_DB_PREFIX . "ac_submits (sid) VALUES ($id); ";
+
+                    $result = mysql_query($exp); 
+
+                    if (!$result)
+                    {
+                         call_user_func($error_handler, 'Insert failed. '); 
+                         return; 
+                    }
+               }
           }
      }
 }
 
-?>
+function vj_get_ce_detail_classic_by_sid($sid, $error_handler = 'vj_error')
+{
+     $filename = VJ_REPORTS_DIR . $sid . '.cmp';
+
+     $fp = fopen($filename, "r"); 
+
+     if (!$fp)
+     {
+          call_user_func($error_handler, 'Could not open CE detail file. ');
+          return; 
+     }
+
+     return vj_util_read_file_adapted($filename); 
+}
+
+function vj_get_submits_num_by_tid($tid, $error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler); 
+
+     $exp = "SELECT * FROM " . VJ_DB_PREFIX . "submits WHERE tid = " . $tid . ";"; 
+
+     $result = mysql_query($exp); 
+
+     if (!$result)
+     {
+          call_user_func($error_handler, 'Could not query the database. '); 
+          return; 
+     }
+
+     return mysql_num_rows($result); 
+}
+
+function vj_get_ac_submits_num_by_tid($tid, $error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler);
+     
+     $exp = "SELECT " . VJ_DB_PREFIX . "submits.sid FROM " . VJ_DB_PREFIX . "submits, " . VJ_DB_PREFIX . "ac_submits WHERE " . VJ_DB_PREFIX . "submits.sid = " . VJ_DB_PREFIX . "ac_submits.sid AND " . VJ_DB_PREFIX . "submits.tid = $tid; "; 
+
+     $result = mysql_query($exp); 
+
+     if (!$result)
+     {
+          call_user_func($error_handler, 'Query failed. '); 
+          return; 
+     }
+
+     return mysql_num_rows($result); 
+}
+
+function vj_code_is_ac($code)
+{
+     return $code == 0; 
+}
+
+?> 

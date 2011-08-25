@@ -11,5 +11,7 @@ define('VJ_RESULTS_DIR', '../judger/results/');
 define('VJ_TASKDIR_AS_JUDGER', '../taskdir/'); 
 define('VJ_SOURCE_AS_JUDGER', '../source/'); 
 define('VJ_REPORTS_DIR', '../report/'); 
+define('VJ_TASKDIR', '../taskdir/'); 
+define('VJ_SOURCEDIR', '../source/'); 
 
 ?>
