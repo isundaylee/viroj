@@ -33,7 +33,7 @@ void init_daemon()
      return; 
 }
 
-char reqdir[200] = "../website/judger/requests/";
+char reqdir[200] = "requests/";
 char cmd[200]; 
 
 int valid(char *name)
