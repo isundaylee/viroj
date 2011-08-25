@@ -5,7 +5,7 @@ require_once(VJ_CORE);
 
 ?>
 
-<div style="margin: auto; width: 600px; ">
+<div style="margin: auto; width: <?php echo VJ_SUBFRAME_WIDTH; ?>; ">
 <?php
      if ($_GET['errmsg'] != '')
      {
@@ -24,7 +24,7 @@ echo $code;
 echo '</div>';
 ?>
 <hr />
-<table style="margin: auto; width: 600px; ">
+<table style="margin: auto; ">
   <?php
      $style = VJ_CONTENT_STYLE; 
      foreach ($tasks as $task)

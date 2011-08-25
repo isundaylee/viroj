@@ -4,7 +4,7 @@ require_once('config.php');
 
 ?>
 
-<form style="margin: auto; width: 600px; text-align: center; " action="proc_login.php" method="post">
+<form style="margin: auto; width: <?php echo VJ_SUBFRAME_WIDTH; ?>; text-align: center; " action="proc_login.php" method="post">
   <?php
       $style = VJ_CONTENT_STYLE; 
       if ($_GET['errmsg'] != '')

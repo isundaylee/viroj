@@ -1,2 +1,9 @@
-<div style="font-family: Georgia, sans-serif; font-size: 30px; text-align: center">Fatal Error</div>
-<div style="font-family: Georgia, sans-serif; font-size: 15px; "><?php echo $ERRMSG; ?></div> 
+<?php
+
+require_once('config.php'); 
+
+$style = VJ_CONTENT_STYLE; 
+
+?>
+
+<div style="text-align: center; color: red; <?php echo $style; ?>"><?php echo $_GET['errmsg']; ?></div>

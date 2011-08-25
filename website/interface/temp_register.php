@@ -3,7 +3,7 @@
 require_once('config.php'); 
 
 ?>
-<form style="text-align: center; margin: auto; width: 600px; " action='proc_register.php' method='post'>
+<form style="text-align: center; margin: auto; width: <?php echo VJ_SUBFRAME_WIDTH; ?>; " action='proc_register.php' method='post'>
   <?php
      $style = VJ_CONTENT_STYLE; 
      if ($_GET['errmsg'] != '')
