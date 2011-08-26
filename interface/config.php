@@ -25,6 +25,7 @@ function get_full_description($desc)
 {
      switch ($desc)
      {
+     case 'RUN': return 'Running'; 
      case 'CTLE': return 'Compile Time Limit Exceeded'; 
      case 'SLLE': return 'Source Length Limit Exceeded'; 
      case 'OLE': return 'Output Limit Exceeded'; 
@@ -42,6 +43,7 @@ function get_display_color($desc)
 {
      switch ($desc)
      {
+     case 'RUN': return '#FFD306'; 
      case 'AC': return '#00FF00'; 
      case 'CE': return 'blue';
      }

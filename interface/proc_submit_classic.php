@@ -24,7 +24,8 @@ if (!vj_valid_tid($tid))
      return; 
 }
 
-vj_submit_classic($code, $tid, $type, 'submit_classic_error_handler'); 
+$uid = vj_get_filtered_uid(); 
+vj_submit_classic($code, $tid, $uid, $type, 'submit_classic_error_handler'); 
 
 vj_util_navigate('status.php'); 
 

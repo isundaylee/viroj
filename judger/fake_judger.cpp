@@ -14,25 +14,30 @@ int main(int argc, char *argv[])
 
      int a = atoi(argv[1]);
      
-     FILE *fp = fopen((resdir + string(argv[1]) + ".res").c_str(), "w");
+     for (int i=1; i<=10; i++)
+     {
+          FILE *fp = fopen((resdir + string(argv[1]) + ".res").c_str(), "w");
+          
+          if (i == 10) fprintf(fp, "acm\n0 %d %d 0\n", 121 * i, 534 * i); 
+          else fprintf(fp, "acm\n12 %d %d %d\n", 121 * i, 534 * i, i);
+          
+          fclose(fp); 
 
+          sleep(1); 
+     }
+          
+/*
+  fp = fopen((resdir + string(argv[1]) + ".cmp").c_str(), "w");
+  
+  fprintf(fp, "Compile Error: Some variables are not declared. \n"); 
+  
+  fclose(fp); 
+*/
+          
      cmd += reqdir; 
      cmd += string(argv[1]); 
      cmd += ".req"; 
-
-     system(cmd.c_str()); 
-
-     fprintf(fp, "acm\n0 1210 5340 0\n");
-
-     fclose(fp); 
-
-/*
-     fp = fopen((resdir + string(argv[1]) + ".cmp").c_str(), "w");
-
-     fprintf(fp, "Compile Error: Some variables are not declared. \n"); 
-
-     fclose(fp); 
-*/
-
+     system(cmd.c_str());
+     
      return 0; 
 }

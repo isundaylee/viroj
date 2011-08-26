@@ -5,9 +5,17 @@ require_once(VJ_CORE);
 
 $W1 = '100px'; 
 $W2 = '100px'; 
-$W3 = '400px'; 
-$W4 = '100px'; 
+$W3 = '100px'; 
+$W4 = '300px'; 
 $W5 = '100px'; 
+$W6 = '100px'; 
+
+$uid = vj_get_filtered_uid(); 
+
+if ($uid == 0)
+{
+     $uid = -1; 
+}
 
 ?>
 
@@ -32,6 +40,7 @@ echo '</div>';
 <hr />
 <table style="margin: auto; ">
   <tr>
+  <th>Status</th>
     <th>TID</th>
     <th>Name</th>
     <th>Title</th>
@@ -43,21 +52,34 @@ echo '</div>';
      foreach ($tasks as $task)
      {
           echo '<tr>'; 
-          echo "<td style='$style; text-align: center; width: $W1; '>"; 
+	  echo "<td style='$style; text-align: center; width: $W1; '>";	
+      if (vj_has_submitted_by_tid_and_uid($task['tid'], $uid))
+      {
+           if (vj_has_aced_by_tid_and_uid($task['tid'], $uid))
+           {
+                echo '<div style="color: #00FF00; ">Accepted</div>'; 
+           }
+           else 
+           {
+                echo '<div style="color: red">Unaccepted</div>'; 
+           }
+      }
+	  echo '</td>'; 
+          echo "<td style='$style; text-align: center; width: $W2; '>"; 
           echo $task['tid']; 
           echo '</td>';
-          echo "<td style='$style; text-align: center; width: $W2; '>";
+          echo "<td style='$style; text-align: center; width: $W3; '>";
           echo $task['name']; 
           echo '</td>'; 
-	  echo "<td style='$style; text-align: center; width: $W3; '>";
+          echo "<td style='$style; text-align: center; width: $W4; '>";
           echo '<a href="show_task.php?tid=' . $task['tid'] . '">' . $task['title'] . '</a>'; 
           echo '</td>'; 
-	  echo "<td style='$style; text-align: center; width: $W4; '>"; 
-	  echo vj_get_submits_num_by_tid($task['tid']);  
-	  echo "</td>"; 
-	  echo "<td style='$style; text-align: center; width: $W5; '>";
-	  echo vj_get_ac_submits_num_by_tid($task['tid']);;
-	  echo "</td>"; 
+          echo "<td style='$style; text-align: center; width: $W5; '>"; 
+          echo vj_get_submits_num_by_tid($task['tid']);  
+          echo "</td>"; 
+          echo "<td style='$style; text-align: center; width: $W6; '>";
+          echo vj_get_ac_submits_num_by_tid($task['tid']);;
+          echo "</td>"; 
           echo '</tr>'; 
      }
   ?>

@@ -2,6 +2,7 @@
 
 require('../core/config.php');
 
+
 function vj_valid_tid($tid, $error_handler = 'vj_error')
 {
      $con = vj_get_connection($error_handler); 
@@ -88,9 +89,10 @@ function vj_util_adapt($str)
      return $str; 
 }
 
+
 function vj_login($username, $password, $error_handler = 'vj_error')
 {
-     if ($_COOKIE['vj_username'] != '')
+     if ($_COOKIE['vj_uid'] != '')
      {
           call_user_func($error_handler, 'Attempting to log in while is already in'); 
           return; 
@@ -105,6 +107,7 @@ function vj_login($username, $password, $error_handler = 'vj_error')
      if ($row = mysql_fetch_array($result))
      {
           setcookie('vj_username', $username); 
+          setcookie('vj_uid', $row['uid']); 
      }
      else 
      {
@@ -134,6 +137,7 @@ function vj_logout($error_handler = 'vj_error')
      }
 
      setcookie('vj_username', ''); 
+     setcookie('vj_uid', '');
 }
 
 function vj_register($username, $password, $error_handler = 'vj_error')
@@ -166,6 +170,23 @@ function vj_get_username()
      return $_COOKIE['vj_username']; 
 }
 
+function vj_get_uid()
+{
+     return $_COOKIE['vj_uid']; 
+}
+
+function vj_get_filtered_uid()
+{
+     $uid = vj_get_uid();
+
+     if ($uid == '')
+     {
+          $uid = 0; 
+     }
+
+     return $uid; 
+}
+
 function vj_get_filtered_username()
 {
      $username = vj_get_username();
@@ -179,6 +200,7 @@ function vj_get_filtered_username()
           return $username; 
      }
 }
+
 
 function vj_valid_letter_num_lines($str)
 {
@@ -299,7 +321,7 @@ function vj_valid_source_name($str)
      }
 }
 
-function vj_submit_classic($code, $tid, $ext, $error_handler = 'vj_error')
+function vj_submit_classic($code, $tid, $uid, $ext, $error_handler = 'vj_error')
 {
      $con = vj_get_connection(error_handler); 
 
@@ -317,7 +339,7 @@ function vj_submit_classic($code, $tid, $ext, $error_handler = 'vj_error')
 
      $name = $row['name'];
 
-     $exp = "INSERT INTO " . VJ_DB_PREFIX . "submits (tid, type, status) VALUES ($tid, '$ext', 0);"; 
+     $exp = "INSERT INTO " . VJ_DB_PREFIX . "submits (tid, uid, type, status) VALUES ($tid, $uid, '$ext', 0);"; 
 
      $result = mysql_query($exp);
 
@@ -478,6 +500,7 @@ function vj_get_result_description($id)
      case 9: return 'WA'; 
      case 10: return 'OLE'; 
      case 11: return 'PE'; 
+     case 12: return 'RUN'; 
      }
 }
 
@@ -588,6 +611,57 @@ function vj_get_ac_submits_num_by_tid($tid, $error_handler = 'vj_error')
 function vj_code_is_ac($code)
 {
      return $code == 0; 
+}
+
+function vj_has_submitted_by_tid_and_uid($tid, $uid, $error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler);
+
+     $table = VJ_DB_PREFIX . "submits"; 
+     $exp = "SELECT * FROM $table WHERE tid = $tid AND uid = $uid; "; 
+
+     $result = mysql_query($exp); 
+
+     if (!$result)
+     {
+          call_user_func($error_handler, 'Querying database failed. '); 
+          return; 
+     }
+
+     if (mysql_num_rows($result) > 0)
+     {
+          return true; 
+     }
+     else
+     {
+          return false; 
+     }
+}
+
+function vj_has_aced_by_tid_and_uid($tid, $uid, $error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler);
+
+     $tsubmits = VJ_DB_PREFIX . "submits"; 
+     $tacsubmits = VJ_DB_PREFIX . "ac_submits"; 
+     $exp = "SELECT $tsubmits.sid FROM $tsubmits, $tacsubmits WHERE $tacsubmits.sid = $tsubmits.sid AND $tsubmits.tid = $tid AND $tsubmits.uid = $uid; ";
+
+     $result = mysql_query($exp); 
+
+     if (!$result)
+     {
+          call_user_func($error_handler, 'Querying database failed. '); 
+          return; 
+     }
+
+     if (mysql_num_rows($result) > 0)
+     {
+          return true; 
+     }
+     else
+     {
+          return false; 
+     }
 }
 
 ?> 
