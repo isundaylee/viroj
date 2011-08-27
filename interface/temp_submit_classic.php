@@ -36,6 +36,7 @@ if ($_GET['errmsg'] != '')
      }
   ?>
   </select>
+  <br />
   <textarea rows="50" cols="80" name="code"></textarea>
   <br />
   <input type="submit" />

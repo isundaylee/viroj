@@ -6,9 +6,9 @@ require_once(VJ_CORE);
 $W1 = '100px'; 
 $W2 = '100px'; 
 $W3 = '100px'; 
-$W4 = '300px'; 
-$W5 = '100px'; 
-$W6 = '100px'; 
+$W4 = '400px'; 
+$W5 = '150px'; 
+$W6 = '150px'; 
 
 $uid = vj_get_filtered_uid(); 
 

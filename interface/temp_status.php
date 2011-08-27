@@ -30,11 +30,12 @@ if ($page > $tot_pages)
 }
 
 $W1 = '50px'; 
-$W2 = '250px'; 
+$W2 = '150px'; 
 $W3 = '250px'; 
-$W4 = '70px';
-$W5 = '90px'; 
-$W6 = '90px'; 
+$W4 = '250px'; 
+$W5 = '100px';
+$W6 = '100px'; 
+$W7 = '100px'; 
 
 ?>
 
@@ -53,10 +54,11 @@ echo '</div>';
 
 <hr />
 
-<table style="text-align: center; <?php echo $style; ?>">
+<table style="margin: auto; text-align: center; <?php echo $style; ?>">
 
 <tr>
 <th>SID</th>
+<th>Submitter</td>
 <th>Title</th>
 <th>Status</th>
 <th>Case ID</th>
@@ -71,20 +73,29 @@ echo '</div>';
           echo "<td id='id$i' style='width: $W1; '>";
           echo $submits[$i]; 
           echo '</td>'; 
-          echo "<td style='width: $W2; '>";
+          echo "<td style='width: $W2; '>"; 
           $submit = vj_get_submit_detail_by_sid($submits[$i], 'status_error_handler'); 
+          if ($submit['uid'] == 0) $username = 'Guest'; 
+          else
+          {
+               $user = vj_get_user_detail_by_uid($submit['uid']);
+               $username = $user['username']; 
+          }
+          echo $username; 
+          echo "</td>"; 
+          echo "<td style='width: $W3; '>";
           $task = vj_get_task_detail_by_tid($submit['tid']); 
           echo '<a href="show_task.php?tid=' . $submit['tid'] . '">'; 
           echo $task['title']; 
           echo '</a>'; 
           echo '</td>';
-          echo "<td id='a$i' style='width: $W3; '>";
+          echo "<td id='a$i' style='width: $W4; '>";
           echo "</td>"; 
-          echo "<td id='b$i' style='width: $W4; '>"; 
+          echo "<td id='b$i' style='width: $W5; '>"; 
           echo "</td>"; 
-          echo "<td id='c$i' style='width: $W5; '>"; 
+          echo "<td id='c$i' style='width: $W6; '>"; 
           echo "</td>"; 
-          echo "<td id='d$i' style='width: $W6; '>"; 
+          echo "<td id='d$i' style='width: $W7; '>"; 
           echo "</td>"; 
           echo '</tr>';
      }
@@ -122,8 +133,21 @@ echo '</div>';
 ?>
 
 <script language="javascript" type="text/javascript">
+var xmlHttps = null; 
+try {
+    xmlHttps = new XMLHttpRequest(); 
+} catch (e) {
+    try {
+	xmlHttps = new ActiveXObject("Msxml2.XMLHTTP"); 
+    } catch (e) {
+	try {
+	    xmlHttps = new ActiveXObject("Microsoft.XMLHTTP"); 
+	} catch (failed) {
+	    xmlHttps = null; 
+	}
+    }
+}
 
-var xmlHttps = new XMLHttpRequest(); 
 if (xmlHttps == null) alert('Error creating xmlHttps'); 
 
 var len = document.getElementById('len').innerHTML; 

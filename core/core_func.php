@@ -187,6 +187,23 @@ function vj_get_filtered_uid()
      return $uid; 
 }
 
+function vj_get_user_detail_by_uid($uid, $error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler); 
+
+     $exp = "SELECT * FROM " . VJ_DB_PREFIX . "accounts WHERE uid = $uid";
+
+     $result = mysql_query($exp); 
+
+     if (!$result)
+     {
+          call_user_func($error_handler, 'Not valid UID. '); 
+          return; 
+     }
+
+     return mysql_fetch_array($result); 
+}
+
 function vj_get_filtered_username()
 {
      $username = vj_get_username();

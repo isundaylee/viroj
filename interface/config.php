@@ -1,7 +1,7 @@
 <?php
 
-define('VJ_PAGE_WIDTH', '1000px'); 
-define('VJ_SUBFRAME_WIDTH', '800px'); 
+define('VJ_PAGE_WIDTH', '1200px'); 
+define('VJ_SUBFRAME_WIDTH', '1000px'); 
 define('VJ_SUBFRAME_HALF_WIDTH', '400px'); 
 define('VJ_CORE', '../core/core_func.php'); 
 define('VJ_CONTENT_STYLE', 'font-family: Georgia, sans-serif; font-size: 15px; ');
