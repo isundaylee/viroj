@@ -123,39 +123,44 @@ echo '</div>';
 
 <script language="javascript" type="text/javascript">
 
-var len = document.getElementById('len').innerHTML; 
+var xmlHttps = new XMLHttpRequest(); 
+if (xmlHttps == null) alert('Error creating xmlHttps'); 
 
-function updatePage(i) {
-    if(xmlHttps[i].readyState == 4) {
-	arr = eval(xmlHttps[i].response); 
-	document.getElementById('a' + arr[0]).innerHTML = arr[1]; 
-	document.getElementById('b' + arr[0]).innerHTML = arr[2]; 
-	document.getElementById('c' + arr[0]).innerHTML = arr[3]; 
-	document.getElementById('d' + arr[0]).innerHTML = arr[4]; 
-	count = 0; 
+var len = document.getElementById('len').innerHTML; 
+var code = ""; 
+
+code = "[" + len + ","; 
+for (i=1; i<=len; i++) {
+    var id = document.getElementById('id' + i).innerHTML; 
+    if (i == 1) code = code + id; 
+    else code = code + "," + id; 
+}
+code += "]"; 
+
+function updatePage() {
+    if(xmlHttps.readyState == 4) {
+	// var ar = eval(xmlHttps.response); 
+	// document.write(ar[1][1]); 
+	var a = xmlHttps.response.split(","); 
+	var j = 0; 
+	for (i=1; i<=len; i++) {
+	    document.getElementById('a' + i).innerHTML = a[++j]; 
+	    document.getElementById('b' + i).innerHTML = a[++j]; 
+	    document.getElementById('c' + i).innerHTML = a[++j]; 
+	    document.getElementById('d' + i).innerHTML = a[++j]; 
+	}
     }
 }
 
-function sendRequest(i) {
-    var id = document.getElementById('id' + i).innerHTML; 
-    var url = "util_get_submit_report?sid=" + id + "&id=" + i; 
-    xmlHttps[i].open("GET", url, true);
-    xmlHttps[i].onreadystatechange = new Function("updatePage(" + i + "); "); 
-    xmlHttps[i].send(null); 
+function sendRequest() {
+    var url = "util_get_submit_report?arr=" + code; 
+    xmlHttps.open("GET", url, true);
+    xmlHttps.onreadystatechange = updatePage; 
+    xmlHttps.send(null); 
 }
 
-function sendAllRequests() {
-    for (i=1; i<=len; i++) sendRequest(i); 
-}
-
-var xmlHttps = new Array(len); 
-for (i=1; i<=len; i++) {
-    xmlHttps[i] = new XMLHttpRequest(); 
-    if (xmlHttps[i] == null) alert("Could not create xmlHttp. "); 
-}
-
-sendAllRequests(); 
-window.setInterval("sendAllRequests(); ", 1000); 
+sendRequest(); 
+window.setInterval("sendRequest(); ", 1000); 
 
 </script>
 

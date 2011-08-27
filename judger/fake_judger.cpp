@@ -13,6 +13,11 @@ int main(int argc, char *argv[])
      if (argc < 2) exit(1);
 
      int a = atoi(argv[1]);
+          
+     cmd += reqdir; 
+     cmd += string(argv[1]); 
+     cmd += ".req"; 
+     system(cmd.c_str());
      
      for (int i=1; i<=10; i++)
      {
@@ -33,11 +38,6 @@ int main(int argc, char *argv[])
   
   fclose(fp); 
 */
-          
-     cmd += reqdir; 
-     cmd += string(argv[1]); 
-     cmd += ".req"; 
-     system(cmd.c_str());
      
      return 0; 
 }
