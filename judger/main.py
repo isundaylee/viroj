@@ -25,7 +25,7 @@ while (True):
 	tmpstr = key.lower()
 	if (tmpstr == "source"):
 		SourceName = value
-	elif (tmpstr == "suf"):
+	elif (tmpstr == "lang"):
 		suf = value
 	elif (tmpstr == "sourcelimit"):
 		SourceLimit = int(value)
