@@ -1,4 +1,4 @@
-SourceName=./src/a.cpp
+Source=./src/a.cpp
 Lang=cpp
 SourceLimit=50
 DataNum=5
