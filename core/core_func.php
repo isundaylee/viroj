@@ -663,6 +663,8 @@ function vj_has_aced_by_tid_and_uid($tid, $uid, $error_handler = 'vj_error')
      $tacsubmits = VJ_DB_PREFIX . "ac_submits"; 
      $exp = "SELECT $tsubmits.sid FROM $tsubmits, $tacsubmits WHERE $tacsubmits.sid = $tsubmits.sid AND $tsubmits.tid = $tid AND $tsubmits.uid = $uid; ";
 
+     echo $exp; 
+
      $result = mysql_query($exp); 
 
      if (!$result)
