@@ -14,10 +14,26 @@ f = open("./requests/%s.req"%(id), "r")
 def Read(s = '='):
 	return f.readline().rstrip("\n"" ""\r").split(s)
 
-tmp, SourceName = Read()
-tmp, suf = Read()
-tmp, SourceLimit = Read()
-SourceLimit = int(SourceLimit)
+SourceName = "main"
+suf = "cpp"
+SourceLimit = 50
+Type = "ACM"
+nData = 10
+
+while (True):
+	Type, value = Read()
+	tmpstr = Type.lower()
+	if (tmpstr == "sourcename"):
+		SourceName = value
+	elif (tmpstr == "suf"):
+		suf = value
+	elif (tmpstr == "sourcelimit"):
+		SourceLimit = int(value)
+	elif (tmpstr == "type"):
+		Type = value
+	elif (tmpstr == "datanum"):
+		nData = int(value)
+		break
 
 Length = int(os.stat(SourceName).st_size)
 
@@ -31,8 +47,6 @@ if ret:
 	Output("1 0 0 0 %d"%(Length))
 	quit(0)
 
-tmp, nData = Read()
-nData = int(nData)
 stime = 0
 maxmeory = 0
 
@@ -51,7 +65,7 @@ for i in range(1, nData + 1):
 		Output("%d %d %d %d %d"%(ret, stime, maxmeory, i, Length))
 		quit(0)
 
-	ret, status = commands.getstatusoutput("python ./checker.py %s ./temp/tmp.out"%(outputdir))
+	ret, status = commands.getstatusoutput("python checker.py %s ./temp/tmp.out"%(outputdir))
 	if ret:
 		Output("9 %d %d %d %d"%(stime, maxmeory, i, Length))
 		quit(0)
