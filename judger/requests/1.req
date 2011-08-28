@@ -1,9 +1,8 @@
-Source=./src/a.cpp
-Lang=cpp
-SourceLimit=50
-DataNum=5
-1.0000 512.000 ./data/1.in ./data/1.out
-1.0000 512.000 ./data/2.in ./data/2.out
-1.0000 512.000 ./data/3.in ./data/3.out
-1.0000 512.000 ./data/4.in ./data/4.out
-1.0000 512.000 ./data/5.in ./data/5.out
+source=../source/11.cpp
+lang=cpp
+type=acm
+datanum=3
+1.000000 128.000000 ../taskdir/add/data/add1.in ../taskdir/add/data/add1.ans
+1.000000 128.000000 ../taskdir/add/data/add2.in ../taskdir/add/data/add2.ans
+1.000000 128.000000 ../taskdir/add/data/add3.in ../taskdir/add/data/add3.ans
+1.000000 128.000000 ../taskdir/add/data/add3.in ../taskdir/add/data/add3.ans

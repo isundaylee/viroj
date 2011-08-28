@@ -8,7 +8,7 @@ SourceLimit = 50
 Type = "ACM"
 nData = 10
 
-id = sys.argv[1]
+id = 1
 commands.getstatusoutput("mkdir ./temp")
 
 def Output(status, exit = True):
