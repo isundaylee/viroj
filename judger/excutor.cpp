@@ -5,7 +5,7 @@ error code:
 7:TLE
 8:MLE
 format:
-./excutor tLimit mLimit inputdir
+./excutor tLimit mLimit inputdir outputdir resdir
 */
 
 #include <string>
@@ -27,25 +27,31 @@ format:
 #define RE 6
 #define TLE 7
 #define MLE 8
+#define __PATH__ "./temp"
 
 using namespace std;
 
 int tLimit, mLimit;//time: MS, memory: KB
 string program = "main";
-string PATH = "../";
+string PATH = __PATH__;
+char *outputdir, *inputdir, *resdir;
 pid_t subpid;
 int tused = 0, mused = 0;
 
+int cnt = 0;
+
 inline void Result(int status) {
-	printf("%d %d", tused, mused);
-	exit(status);
+	ptrace(PTRACE_KILL, subpid, 0, 0);
+	fprintf(stdout, "%d %d %d", tused, mused, status);
+	exit(0);
 }
 
 #define Read_Config {\
 	double time_limit, memory_limit;\
 	sscanf(argv[1], "%lf", &time_limit);\
 	sscanf(argv[2], "%lf", &memory_limit);\
-	program = PATH + program + " <" + argv[3] + " >" + PATH + "tmp.out";\
+	inputdir = argv[3], outputdir = argv[4], resdir = argv[5];\
+	program = PATH + program;\
 	tLimit = time_limit * 1000;\
 	mLimit = memory_limit * 1024;\
 }
@@ -57,10 +63,9 @@ inline void Trans(string st, char ch[]) {
 	ch[n + 1] = '\0';
 }
 
-char tmp[100] = "../main";
+char tmp[100];
 inline void Run(void) {
 	ptrace(PTRACE_TRACEME, 0, NULL, NULL);
-	//system(tmp);
 	execl(tmp, tmp, NULL);
 }
 
@@ -70,7 +75,7 @@ inline int GetMomeoryUsed(void) {
 
 	FILE* tmp = fopen(ch, "r");
 	int memory;
-	for (int i = 1; i <= 6; i++)
+	for (int i = 1; i <= 1; i++)
 		fscanf(tmp, "%d", &memory);
 	fclose(tmp);
 
@@ -131,10 +136,11 @@ inline void SetTimer(void) {
 }
 
 int main(int argc, char* argv[]) {
-	//Read_Config;
-	tLimit = 500, mLimit = 1000000, program = "../main <../1.in >./tmp.out";
-
-	//Trans(program, tmp);
+	Read_Config;
+	freopen(inputdir, "r", stdin);
+	freopen(outputdir, "w", stdout);
+	
+	Trans(program, tmp);
 	subpid = fork();
 
 	if (subpid == 0) {
@@ -148,8 +154,10 @@ int main(int argc, char* argv[]) {
 	SetTimer();
 	while(true) {
 		wait4(subpid, &status, 0, &info);
-		tused = info.ru_utime.tv_sec * 100 + info.ru_utime.tv_usec;
+		tused = info.ru_utime.tv_sec * 1000 + info.ru_utime.tv_usec / 1000;
 		
+		cnt++;
+
 		if (WIFEXITED(status)) {
 			int code = WEXITSTATUS(status);
 			if (code != 0) {
@@ -165,7 +173,8 @@ int main(int argc, char* argv[]) {
 			if (tmp == SIGTRAP) {
 				check();
 			}
-			else if (tmp != SIGUSR1) {
+			else if (tmp != SIGUSR1 && tmp != SIGPROF) {
+				printf("%d\n", tmp);
 				Result(RE);
 			}
 		}

@@ -10,7 +10,7 @@ import TimeOut_Decorator
 import commands
 import os
 
-PATH = "./"
+PATH = "./temp"
 TIME_LIMIT = 10
 SourceName = sys.argv[1]
 suf = sys.argv[2]
