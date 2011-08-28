@@ -81,8 +81,6 @@ int main()
 {
      FILE *fp; 
 
-     signal(SIGCHLD, SIG_IGN);
-
      init_daemon();
 
      fp = fopen("judger_daemon.log", "a"); 

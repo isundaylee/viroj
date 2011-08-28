@@ -9,6 +9,7 @@
 #include <assert.h>
 #include <unistd.h>
 #include <signal.h>
+#include <linux/ptrace.h>
 #include <sys/types.h>
 #include <sys/wait.h>
 #include <sys/resource.h>
