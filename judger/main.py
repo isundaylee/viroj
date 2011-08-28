@@ -23,7 +23,7 @@ nData = 10
 while (True):
 	Type, value = Read()
 	tmpstr = Type.lower()
-	if (tmpstr == "sourcename"):
+	if (tmpstr == "source"):
 		SourceName = value
 	elif (tmpstr == "suf"):
 		suf = value
