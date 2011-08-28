@@ -498,7 +498,7 @@ function vj_get_submit_report_by_sid($sid, $error_handler = 'vj_error')
 
      if ($type == 'acm')
      {
-          fscanf($fp, "%d%d%d%d%d", $ans['rescode'], $ans['time'], $ans['memory'], $ans['codelen'], $ans['wrongid']);
+          fscanf($fp, "%d%d%d%d%d", $ans['rescode'], $ans['time'], $ans['memory'], $ans['wrongid'], $ans['codelen']);
      }
 
      return $ans; 

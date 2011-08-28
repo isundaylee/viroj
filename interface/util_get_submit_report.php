@@ -16,6 +16,10 @@ for ($i=1; $i<=$len; $i++) {
           $color = get_display_color($status);
           
           $ans[$i][1] = "<div style='color: $color; '>$fullsta</div>"; 
+          if ($status == 'CE') 
+          {
+               $ans[$i][1] = '<a href="show_ce_detail_classic.php?sid=' . $a[$i] . '">' . $ans[$i][1] . '</a>'; 
+          }
           $ans[$i][2] = "<div>" . $report['wrongid'] . "</div>"; 
           $ans[$i][3] = "<div>" . $report['time'] . " MS</div>";
           $ans[$i][4] = "<div>" . $report['memory'] . " KB</div>"; 
