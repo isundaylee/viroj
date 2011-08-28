@@ -81,6 +81,7 @@ int main()
 {
      FILE *fp; 
 
+     // asd
      init_daemon();
 
      fp = fopen("judger_daemon.log", "a"); 
