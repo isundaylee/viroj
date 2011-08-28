@@ -2,23 +2,23 @@ import sys
 import commands
 import os
 
+SourceName = "main"
+suf = "cpp"
+SourceLimit = 50
+Type = "ACM"
+nData = 10
+
 id = sys.argv[1]
 commands.getstatusoutput("mkdir ./temp")
 
 def Output(status, exit = True):
 	if (exit):
 		commands.getstatusoutput("rm -rf ./temp")
-	open("./results/%s.res"%(id), "w").write(status)
+	open("./results/%s.res"%(id), "w").write(Type + "\n" + status)
 
 f = open("./requests/%s.req"%(id), "r")
 def Read(s = '='):
 	return f.readline().rstrip("\n"" ""\r").split(s)
-
-SourceName = "main"
-suf = "cpp"
-SourceLimit = 50
-Type = "ACM"
-nData = 10
 
 while (True):
 	Type, value = Read()
