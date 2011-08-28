@@ -21,8 +21,8 @@ def Read(s = '='):
 	return f.readline().rstrip("\n"" ""\r").split(s)
 
 while (True):
-	Type, value = Read()
-	tmpstr = Type.lower()
+	key, value = Read()
+	tmpstr = key.lower()
 	if (tmpstr == "source"):
 		SourceName = value
 	elif (tmpstr == "suf"):
