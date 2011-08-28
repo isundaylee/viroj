@@ -315,6 +315,7 @@ function vj_get_task_detail_by_tid($tid, $error_handler = 'vj_error')
           return; 
      }
 
+     $task['name'] = $name; 
      $task['title'] = $row['title']; 
      $task['desc'] = vj_util_read_file_adapted($taskroot . 'desc.txt'); 
      $task['input'] = vj_util_read_file_adapted($taskroot . 'input.txt'); 
