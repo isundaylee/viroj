@@ -43,7 +43,7 @@ if Length > SourceLimit * 1024:
 
 ret, status = commands.getstatusoutput("python compiler.py %s %s"%(SourceName, suf))
 if ret:
-	open("./results/compile.tmp", "w").write(status)
+	open("./results/%s.cmp"%(id), "w").write(status)
 	Output("1 0 0 0 %d"%(Length))
 	quit(0)
 
