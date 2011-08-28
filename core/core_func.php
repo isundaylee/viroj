@@ -637,9 +637,6 @@ function vj_has_submitted_by_tid_and_uid($tid, $uid, $error_handler = 'vj_error'
      $table = VJ_DB_PREFIX . "submits"; 
      $exp = "SELECT * FROM $table WHERE tid = $tid AND uid = $uid; "; 
 
-     echo $exp; 
-     return; 
-
      $result = mysql_query($exp); 
 
      if (!$result)
@@ -665,9 +662,6 @@ function vj_has_aced_by_tid_and_uid($tid, $uid, $error_handler = 'vj_error')
      $tsubmits = VJ_DB_PREFIX . "submits"; 
      $tacsubmits = VJ_DB_PREFIX . "ac_submits"; 
      $exp = "SELECT $tsubmits.sid FROM $tsubmits, $tacsubmits WHERE $tacsubmits.sid = $tsubmits.sid AND $tsubmits.tid = $tid AND $tsubmits.uid = $uid; ";
-
-     echo $exp; 
-     return; 
 
      $result = mysql_query($exp); 
 
