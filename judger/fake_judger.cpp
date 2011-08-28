@@ -23,8 +23,8 @@ int main(int argc, char *argv[])
      {
           FILE *fp = fopen((resdir + string(argv[1]) + ".res").c_str(), "w");
           
-          if (i == 10) fprintf(fp, "acm\n0 %d %d 0\n", 121 * i, 534 * i); 
-          else fprintf(fp, "acm\n12 %d %d %d\n", 121 * i, 534 * i, i);
+          if (i == 10) fprintf(fp, "acm\n0 %d %d 125 0\n", 121 * i, 534 * i); 
+          else fprintf(fp, "acm\n12 %d %d 125 %d\n", 121 * i, 534 * i, i);
           
           fclose(fp); 
 

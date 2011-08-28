@@ -19,6 +19,7 @@ for ($i=1; $i<=$len; $i++) {
           $ans[$i][2] = "<div>" . $report['wrongid'] . "</div>"; 
           $ans[$i][3] = "<div>" . $report['time'] . " MS</div>";
           $ans[$i][4] = "<div>" . $report['memory'] . " KB</div>"; 
+          $ans[$i][5] = "<div>" . $report['codelen'] . " B</div>"; 
      } else { 
           $fullsta = "Pending"; 
           $color = VJ_STATUS_COLOR_PENDING; 
@@ -26,11 +27,12 @@ for ($i=1; $i<=$len; $i++) {
           $ans[$i][2] = ''; 
           $ans[$i][3] = ''; 
           $ans[$i][4] = ''; 
+          $ans[$i][5] = ''; 
      }
 }
 
 for ($i=1; $i<=$len; $i++) {
-     for ($j=1; $j<=4; $j++) {
+     for ($j=1; $j<=5; $j++) {
           if ($i == 1 && $j == 1) echo "," . $ans[$i][$j]; 
           else echo "," . $ans[$i][$j]; 
      }

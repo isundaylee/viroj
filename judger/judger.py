@@ -1,6 +1,6 @@
 import commands
 
-ret, test = commands.getstatusouput("./main.py <config")
+ret, test = commands.getstatusoutput("./main.py <config")
 if ret == 5:
 	print "5 0 0 0"
 if ret == 1:

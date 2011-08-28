@@ -31,11 +31,12 @@ if ($page > $tot_pages)
 
 $W1 = '50px'; 
 $W2 = '150px'; 
-$W3 = '250px'; 
-$W4 = '250px'; 
+$W3 = '100px'; 
+$W4 = '300px'; 
 $W5 = '100px';
 $W6 = '100px'; 
 $W7 = '100px'; 
+$W8 = '100px'; 
 
 ?>
 
@@ -59,11 +60,12 @@ echo '</div>';
 <tr>
 <th>SID</th>
 <th>Submitter</td>
-<th>Title</th>
+<th>Prob. ID</th>
 <th>Status</th>
 <th>Case ID</th>
 <th>Time</th>
 <th>Memory</th>
+<th>Code Len.</th>
 </tr>
 
 <?php
@@ -86,7 +88,7 @@ echo '</div>';
           echo "<td style='width: $W3; '>";
           $task = vj_get_task_detail_by_tid($submit['tid']); 
           echo '<a href="show_task.php?tid=' . $submit['tid'] . '">'; 
-          echo $task['title']; 
+          echo $submit['tid']; 
           echo '</a>'; 
           echo '</td>';
           echo "<td id='a$i' style='width: $W4; '>";
@@ -96,6 +98,8 @@ echo '</div>';
           echo "<td id='c$i' style='width: $W6; '>"; 
           echo "</td>"; 
           echo "<td id='d$i' style='width: $W7; '>"; 
+          echo "</td>"; 
+          echo "<td id='e$i' style='width: $W8; '>"; 
           echo "</td>"; 
           echo '</tr>';
      }
@@ -172,6 +176,7 @@ function updatePage() {
 	    document.getElementById('b' + i).innerHTML = a[++j]; 
 	    document.getElementById('c' + i).innerHTML = a[++j]; 
 	    document.getElementById('d' + i).innerHTML = a[++j]; 
+	    document.getElementById('e' + i).innerHTML = a[++j]; 
 	}
     }
 }
