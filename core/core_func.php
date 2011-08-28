@@ -100,7 +100,7 @@ function vj_login($username, $password, $error_handler = 'vj_error')
 
      $con = vj_get_connection(error_handler);
 
-     $exp = "SELECT * FROM " . VJ_DB_PREFIX . "accounts " . " WHERE username = '" . $username . "' AND PASSWORD = '" . $password . "';";
+     $exp = "SELECT * FROM " . VJ_DB_PREFIX . "accounts " . " WHERE username = '" . $username . "' AND PASSWORD = '" . hash("md5", $password) . "';";
 
      $result = mysql_query($exp);
 
@@ -154,7 +154,7 @@ function vj_register($username, $password, $error_handler = 'vj_error')
           return; 
      }
 
-     $exp = "INSERT INTO " . VJ_DB_PREFIX . 'accounts (username, password) VALUES ("' . $username . '", "' . $password . '"); ';
+     $exp = "INSERT INTO " . VJ_DB_PREFIX . 'accounts (username, password) VALUES ("' . $username . '", "' . hash("md5", $password) . '"); ';
 
      $result = mysql_query($exp); 
 
