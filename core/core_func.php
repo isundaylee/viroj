@@ -638,6 +638,7 @@ function vj_has_submitted_by_tid_and_uid($tid, $uid, $error_handler = 'vj_error'
      $exp = "SELECT * FROM $table WHERE tid = $tid AND uid = $uid; "; 
 
      echo $exp; 
+     return; 
 
      $result = mysql_query($exp); 
 
@@ -666,6 +667,7 @@ function vj_has_aced_by_tid_and_uid($tid, $uid, $error_handler = 'vj_error')
      $exp = "SELECT $tsubmits.sid FROM $tsubmits, $tacsubmits WHERE $tacsubmits.sid = $tsubmits.sid AND $tsubmits.tid = $tid AND $tsubmits.uid = $uid; ";
 
      echo $exp; 
+     return; 
 
      $result = mysql_query($exp); 
 
