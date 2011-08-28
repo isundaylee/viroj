@@ -637,11 +637,13 @@ function vj_has_submitted_by_tid_and_uid($tid, $uid, $error_handler = 'vj_error'
      $table = VJ_DB_PREFIX . "submits"; 
      $exp = "SELECT * FROM $table WHERE tid = $tid AND uid = $uid; "; 
 
+     echo $exp; 
+
      $result = mysql_query($exp); 
 
      if (!$result)
      {
-          call_user_func($error_handler, 'Querying database failed. '); 
+          call_user_func($error_handler, 'Querying database failed. ');
           return; 
      }
 
