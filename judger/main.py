@@ -1,49 +1,60 @@
 import sys
 import commands
+import os
 
+id = sys.argv[1]
 commands.getstatusoutput("mkdir ./temp")
 
-def Output(status):
-	open("./result/%s.res"%(sys.argv[1]), "w").write(status)
+def Output(status, exit = True):
+	if (exit):
+		commands.getstatusoutput("rm -rf ./temp")
+	open("./results/%s.res"%(id), "w").write(status)
 
-tmp, SourceName = raw_input().split("=")
-tmp, suf = raw_input.split("=")
-tmp, SourceLimit = raw_input.split("=")
+f = open("./requests/%s.req"%(id), "r")
+def Read(s = '='):
+	return f.readline().rstrip("\n"" ""\r").split(s)
 
-Length = os.st_size(SourceName)
-if Length * 1024 > SourceLimit:
-	Output("5 0 0 0")
+tmp, SourceName = Read()
+tmp, suf = Read()
+tmp, SourceLimit = Read()
+SourceLimit = int(SourceLimit)
+
+Length = int(os.stat(SourceName).st_size)
+
+if Length > SourceLimit * 1024:
+	Output("5 0 0 0 %d"%(Length))
 	quit(0)
 
-ret, status = commands.getstatusoutput("python conpiler.py %s %s >./temp/tmp.com"%(SourceName, suf))
+ret, status = commands.getstatusoutput("python compiler.py %s %s"%(SourceName, suf))
 if ret:
-	open("./result/compile.tmp", "w").write(status)
-	Output("1 0 0 0")
+	open("./results/compile.tmp", "w").write(status)
+	Output("1 0 0 0 %d"%(Length))
 	quit(0)
 
-nData=int(raw_input())
+tmp, nData = Read()
+nData = int(nData)
 stime = 0
 maxmeory = 0
+
 for i in range(1, nData + 1):
 
-	tLimit, mLimit, inputdir, outputdir = raw_input().split(" ")
-	ret, status = commands.getstatusoutput("./excutor %s %s %s %s"&(tLimit, mLimit, inputdir, "./temp/tmp.out"))
+	tLimit, mLimit, inputdir, outputdir = Read(' ')
+	ret, status = commands.getstatusoutput("./excutor %s %s %s"%(tLimit, mLimit, inputdir))
 
-	timeused, memused = map(int, status.split())
+	timeused, memused, ret = map(int, open("./temp/excutor.tmp", "r").read().split())
 	stime += timeused
 	maxmeory = max(maxmeory, memused)
 	
-	Output("12 %d %d %d"%(stime, maxmeory, i))
+	Output("12 %d %d %d %d"%(stime, maxmeory, i, Length), False)
 
 	if ret:
-		Output("6 %d %d %d"%(stime, maxmeory, i))
+		Output("%d %d %d %d %d"%(ret, stime, maxmeory, i, Length))
 		quit(0)
 
 	ret, status = commands.getstatusoutput("python ./checker.py %s ./temp/tmp.out"%(outputdir))
 	if ret:
-		print "9 %d %d %d"%(stime, maxmeory, i)
+		Output("9 %d %d %d %d"%(stime, maxmeory, i, Length))
 		quit(0)
 
-commands.getstatusoutput("rm -rf ./temp")
-print "0 %d %d %d"%(stime, maxmeory, 0)
+Output("0 %d %d %d %d"%(stime, maxmeory, 0, Length))
 

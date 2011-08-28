@@ -5,44 +5,27 @@ error code:
 7:TLE
 8:MLE
 format:
-./excutor tLimit mLimit inputdir outputdir resdir
+./excutor tLimit mLimit inputdir
 */
 
-#include <string>
-#include <string.h>
-#include <stdio.h>
-#include <stdlib.h>
-#include <assert.h>
-#include <unistd.h>
-#include <signal.h>
-#include <sys/types.h>
-#include <sys/wait.h>
-#include <sys/resource.h>
-#include <sys/ptrace.h>
-#include <sys/user.h>
-#include <sys/syscall.h>
-#include <sys/time.h>
+//#define Debug
 
-#define NORMAL 0
-#define RE 6
-#define TLE 7
-#define MLE 8
-#define __PATH__ "./temp"
+#include "excutor.h"
 
 using namespace std;
 
 int tLimit, mLimit;//time: MS, memory: KB
 string program = "main";
 string PATH = __PATH__;
-char *outputdir, *inputdir, *resdir;
+char outputdir[] = "./temp/tmp.out", *inputdir, *resdir;
 pid_t subpid;
 int tused = 0, mused = 0;
 
 int cnt = 0;
 
-inline void Result(int status) {
-	ptrace(PTRACE_KILL, subpid, 0, 0);
-	fprintf(stdout, "%d %d %d", tused, mused, status);
+inline void Result(int status, bool flag = true) {
+	if (flag) ptrace(PTRACE_KILL, subpid, 0, 0);
+	fprintf(fopen("./temp/excutor.tmp", "w"), "%d %d %d\n", tused, mused, status);
 	exit(0);
 }
 
@@ -50,7 +33,7 @@ inline void Result(int status) {
 	double time_limit, memory_limit;\
 	sscanf(argv[1], "%lf", &time_limit);\
 	sscanf(argv[2], "%lf", &memory_limit);\
-	inputdir = argv[3], outputdir = argv[4], resdir = argv[5];\
+	inputdir = argv[3];\
 	program = PATH + program;\
 	tLimit = time_limit * 1000;\
 	mLimit = memory_limit * 1024;\
@@ -75,7 +58,7 @@ inline int GetMomeoryUsed(void) {
 
 	FILE* tmp = fopen(ch, "r");
 	int memory;
-	for (int i = 1; i <= 1; i++)
+	for (int i = 1; i <= 6; i++)
 		fscanf(tmp, "%d", &memory);
 	fclose(tmp);
 
@@ -84,7 +67,7 @@ inline int GetMomeoryUsed(void) {
 }
 
 inline bool ForbiddenSyscall(int syscall) {
-	return false;
+	return syscall_list[syscall];
 }
 
 inline void check(void) {
@@ -136,11 +119,20 @@ inline void SetTimer(void) {
 }
 
 int main(int argc, char* argv[]) {
-	Read_Config;
+
+#ifdef Debug
+	fprintf(stdout, "%d %d %s\n", tLimit, mLimit, inputdir);
+	freopen("./data/1.in", "r", stdin);
+	program = "./temp/main";
+	Trans(program, tmp);
+	tLimit = 1000, mLimit = 512000;
+#else
+	Read_Config
 	freopen(inputdir, "r", stdin);
 	freopen(outputdir, "w", stdout);
-	
 	Trans(program, tmp);
+#endif
+
 	subpid = fork();
 
 	if (subpid == 0) {
@@ -161,9 +153,9 @@ int main(int argc, char* argv[]) {
 		if (WIFEXITED(status)) {
 			int code = WEXITSTATUS(status);
 			if (code != 0) {
-				Result(RE);
+				Result(RE, false);
 			}
-			Result(NORMAL);
+			Result(NORMAL, false);
 		}
 		if (WIFSIGNALED(status)) {
 			Result(RE);
@@ -174,7 +166,6 @@ int main(int argc, char* argv[]) {
 				check();
 			}
 			else if (tmp != SIGUSR1 && tmp != SIGPROF) {
-				printf("%d\n", tmp);
 				Result(RE);
 			}
 		}
