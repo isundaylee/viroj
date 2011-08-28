@@ -14,6 +14,7 @@ commands.getstatusoutput("mkdir ./temp")
 def Output(status, exit = True):
 	if (exit):
 		commands.getstatusoutput("rm -rf ./temp")
+		commands.getstatusoutput("rm -r ./requests/%s.req"%(id))
 	open("./results/%s.res"%(id), "w").write(Type + "\n" + status)
 
 f = open("./requests/%s.req"%(id), "r")
