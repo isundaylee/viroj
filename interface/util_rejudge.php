@@ -14,12 +14,9 @@ $ub = $_GET['to'];
 $con = vj_get_connection(); 
 $exp = "DELETE FROM " . VJ_DB_PREFIX . "ac_submits WHERE sid >= $lb AND sid <= $ub; "; 
 
-echo $exp; 
-return; 
-
 if (!mysql_query($exp))
 {
-     vj_error('Error deleting unnecessary records. '); 
+     vj_error('Error deleting unnecessary records. ' . mysql_error()); 
      return; 
 }
 
