@@ -86,7 +86,7 @@ int work()
           strcat(cmd, arr[i]); 
           system(cmd); 
           printf("%s\n", cmd);
-          break; 
+          // break; 
      }
 
      if (tot > 0) exit(0); 
