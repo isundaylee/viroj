@@ -15,7 +15,7 @@ TIME_LIMIT = 10
 SourceName = sys.argv[1]
 suf = sys.argv[2]
 
-PASCAL = "fpc %s -o %s -Co -Cr -Ci Ct" % (SourceName, PATH + "main")
+PASCAL = 'fpc %s -o"%s" -Co -Cr -Ci -Ct' % (SourceName, PATH + "main")
 CPP = "g++ %s -o %s -O2 -Wall -lm" % (SourceName, PATH + "main")
 C = "gcc %s -o %s -O2 -Wall -lm" % (SourceName, PATH + "main")
 LanguageCompile = [PASCAL, CPP, C]
