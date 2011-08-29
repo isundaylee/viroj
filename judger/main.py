@@ -53,6 +53,8 @@ maxmeory = 0
 
 for i in range(1, nData + 1):
 
+	Output("12 %d %d %d %d"%(stime, maxmeory, i, Length), False)
+
 	tLimit, mLimit, inputdir, outputdir = Read(' ')
 	ret, status = commands.getstatusoutput("./excutor %s %s %s"%(tLimit, mLimit, inputdir))
 
@@ -60,8 +62,6 @@ for i in range(1, nData + 1):
 	stime += timeused
 	maxmeory = max(maxmeory, memused)
 	
-	Output("12 %d %d %d %d"%(stime, maxmeory, i, Length), False)
-
 	if ret:
 		Output("%d %d %d %d %d"%(ret, stime, maxmeory, i, Length))
 		quit(0)

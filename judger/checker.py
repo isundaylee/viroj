@@ -10,6 +10,8 @@ usr_output=sys.argv[2]
 
 ret, status = commands.getstatusoutput("diff %s %s -q -B" %(std_output, usr_output))
 
+print ret
+
 if ret == 0:
 	quit(AC)
 else:
