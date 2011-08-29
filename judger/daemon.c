@@ -79,6 +79,15 @@ int work()
 
      qsort(arr + 1, tot, sizeof(arr[0]), cmp); 
 
+     if (tot > 0)
+     {
+          for (i=1; i<=tot; i++)
+          {
+               printf("%s\n", arr[i]); 
+          }
+          exit(0); 
+     }
+     
      for (i=1; i<=tot; i++)
      {
           strcpy(cmd, "python main.py "); 
@@ -97,7 +106,7 @@ int main()
 {
      FILE *fp; 
 
-     init_daemon();
+     // init_daemon();
 
      fp = fopen("judger_daemon.log", "a"); 
 
