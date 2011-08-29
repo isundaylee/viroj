@@ -2,6 +2,57 @@
 
 require('../core/config.php');
 
+function vj_get_task_types()
+{
+     return array('acm'); 
+}
+
+function vj_write_task_conf_file($arr, $datadir, $error_handler = 'vj_error')
+{
+     $a = array('type', 'tlimit', 'mlimit', 'srclimit', 'inf', 'ouf', 'datanum'); 
+     foreach ($a as $str) if (!isset($arr[$str]))
+     {
+          call_user_func($error_handler, 'Info not complete'); 
+     }
+
+     $str = ''; 
+
+     foreach ($arr as $i => $j)
+     {
+          if ($i == 'tlimit') continue; 
+          if ($i == 'mlimit') continue; 
+          if ($i == 'srclimit') continue; 
+          if ($i == 'inf') continue; 
+          if ($i == 'ouf') continue; 
+          if ($i == 'datanum') continue; 
+          $str .= "$i=$j\n";
+     }
+     $str.="datanum=" . $arr['datanum'] . "\n"; 
+     for ($i=1; $i<=$arr['datanum']; $i++)
+     {
+          $inf = str_replace("?", $i, $arr['inf']); 
+          $ouf = str_replace("?", $i, $arr['ouf']); 
+          $inf = $datadir . $inf; 
+          $ouf = $datadir . $ouf; 
+          $str .= $arr['tlimit'] . " " . $arr['mlimit'] . " " . $inf . " " . $ouf . "\n"; 
+     }
+    
+     return $str; 
+}
+
+function vj_util_write_file($filename, $str, $error_handler = 'vj_error')
+{
+     $fp = fopen($filename, "w"); 
+
+     if (!$fp)
+     {
+          call_user_func($error_handler, 'Could not open file for write' ); 
+          return; 
+     }
+     
+     fwrite($fp, $str); 
+     fclose($fp); 
+}
 
 function vj_valid_tid($tid, $error_handler = 'vj_error')
 {

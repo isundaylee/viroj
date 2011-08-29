@@ -2,7 +2,7 @@
 
 require_once('config.php'); 
 
-$navi_num = 6; 
+$navi_num = 7; 
 
 $navi_title[1] = "Home"; 
 $navi_title[2] = "Problems"; 
@@ -10,6 +10,7 @@ $navi_title[3] = "Status";
 $navi_title[4] = "Submit";
 $navi_title[5] = "Logout"; 
 $navi_title[6] = "Register"; 
+$navi_title[7] = "Add New Task"; 
 
 $navi_url[1] = "index.php"; 
 $navi_url[2] = "problems.php"; 
@@ -17,6 +18,7 @@ $navi_url[3] = "status.php";
 $navi_url[4] = "submit_classic.php"; 
 $navi_url[5] = "logout.php";
 $navi_url[6] = "register.php"; 
+$navi_url[7] = "add_task.php"; 
 
 if (!vj_is_logged_in())
 {
