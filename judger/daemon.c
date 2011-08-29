@@ -82,7 +82,7 @@ int work()
      for (i=1; i<=tot; i++)
      {
           strcpy(cmd, "python main.py "); 
-          arr[i][strlen(name) - 4] = 0;
+          arr[i][strlen(arr[i]) - 4] = 0;
           strcat(cmd, arr[i]); 
           system(cmd); 
           // break; 
