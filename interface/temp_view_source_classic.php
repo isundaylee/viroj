@@ -24,7 +24,11 @@ echo "<div style='margin: auto; width: $width; '>";
 
 echo "<div style='$style'>"; 
 
+echo "<code>"; 
+
 echo vj_get_sourcecode_classic_by_sid($s); 
+
+echo "</code>"; 
 
 echo "</div>";
 
