@@ -78,15 +78,6 @@ int work()
      }
 
      qsort(arr + 1, tot, sizeof(arr[0]), cmp); 
-
-     if (tot > 0)
-     {
-          for (i=1; i<=tot; i++)
-          {
-               printf("%s\n", arr[i]); 
-          }
-          exit(0); 
-     }
      
      for (i=1; i<=tot; i++)
      {
@@ -94,8 +85,11 @@ int work()
           arr[i][strlen(name) - 4] = 0;
           strcat(cmd, arr[i]); 
           system(cmd); 
+          printf("%s\n", arr[i]);
           break; 
      }
+
+     if (tot > 0) exit(0); 
 
      fclose(ft); 
 
