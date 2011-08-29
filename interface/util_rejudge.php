@@ -11,6 +11,13 @@ if (!(isset($_GET['from']) && isset($_GET['to']) && $_GET['from'] <= $_GET['to']
 $lb = $_GET['from'];
 $ub = $_GET['to'];
 
+$con = vj_get_connection(); 
+$exp = "DELETE * FROM " . VJ_DB_PREFIX . "ac_submits WHERE sid >= $lb &&sid <= $ub"; 
+
+echo $exp; 
+
+return;  
+
 for ($i=$lb; $i<=$ub; $i++)
 {
      $req = VJ_REQUESTS_DIR . $i . '.req'; 
