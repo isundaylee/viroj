@@ -155,12 +155,13 @@ try {
 if (xmlHttps == null) alert('Error creating xmlHttps'); 
 
 var len = document.getElementById('len').innerHTML; 
-var code = ""; 
+var code = "", ocode = ""; 
 
 code = "[" + len + ","; 
+ocode = code; 
 for (i=1; i<=len; i++) {
     var id = document.getElementById('id' + i).innerHTML; 
-    if (i == 1) code = code + id; 
+    if (code == ocode) code = code + id; 
     else code = code + "," + id; 
 }
 code += "]"; 
