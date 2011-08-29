@@ -12,10 +12,7 @@ $lb = $_GET['from'];
 $ub = $_GET['to'];
 
 $con = vj_get_connection(); 
-$exp = "DELETE * FROM " . VJ_DB_PREFIX . "ac_submits WHERE sid >= $lb AND sid <= $ub; "; 
-
-echo $exp; 
-return; 
+$exp = "DELETE FROM " . VJ_DB_PREFIX . "ac_submits WHERE sid >= $lb AND sid <= $ub; "; 
 
 if (!mysql_query($exp))
 {
