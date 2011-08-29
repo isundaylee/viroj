@@ -54,9 +54,18 @@ int valid(char *name)
      return 1; 
 }
 
+char arr[10000][200]; 
+
+int cmp(const void *a, const void *b)
+{
+     if (strlen(a) < strlen(b)) return -1; 
+     else if (strlen(a) > strlen(b)) return 1; 
+     else return strcmp(a, b); 
+}
+
 int work()
 {
-     int ret = 0; 
+     int ret = 0, tot = 0, i; 
      char name[200]; 
      FILE *ft = fopen("judger_daemon.tmp", "r");
 
@@ -65,9 +74,16 @@ int work()
           ret = 1; 
           name[strlen(name) - 1] = 0; 
           if (0 == valid(name)) continue; 
+          memcpy(arr[++tot], name, sizeof(name)); 
+     }
+
+     qsort(arr + 1, tot, sizeof(arr[0]), cmp); 
+
+     for (i=1; i<=tot; i++)
+     {
           strcpy(cmd, "python main.py "); 
-          name[strlen(name) - 4] = 0;
-          strcat(cmd, name); 
+          arr[i][strlen(name) - 4] = 0;
+          strcat(cmd, arr[i]); 
           system(cmd); 
           break; 
      }
