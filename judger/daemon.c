@@ -97,7 +97,7 @@ int main()
 {
      FILE *fp; 
 
-     // init_daemon();
+     init_daemon();
 
      fp = fopen("judger_daemon.log", "a"); 
 
