@@ -56,7 +56,6 @@ for i in range(1, nData + 1):
 	Output("12 %d %d %d %d"%(stime, maxmeory, i, Length), False)
 
 	tLimit, mLimit, inputdir, outputdir = Read(' ')
-	Output("12 %d %d %d %d"%(stime, maxmeory, i, Length), False)
 
 	ret, status = commands.getstatusoutput("./excutor %s %s %s"%(tLimit, mLimit, inputdir))
 
