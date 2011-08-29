@@ -83,7 +83,7 @@ function vj_util_read_file_adapted($filename, $error_handler = 'vj_error')
 
 function vj_util_adapt($str)
 {
-     $str = str_replace(" ", '&nbsp; ', $str); 
+     $str = str_replace(" ", '&nbsp;', $str); 
      $str = str_replace("\n", '<br />', $str);
 
      return $str; 
