@@ -71,12 +71,18 @@ echo '</div>';
 <?php
      for ($i=1; $i<=$len; $i++)
      {
+          $submit = vj_get_submit_detail_by_sid($submits[$i], 'status_error_handler');
           echo '<tr>';
-          echo "<td id='id$i' style='width: $W1; '>";
+          $uid = vj_get_filtered_uid(); 
+          if ($uid == 0) $uid = -1; 
+          echo "<td style='width: $W1; '>";
+          if ($submit['uid'] == $uid) echo "<a href='view_source_classic.php?sid=" . $submits[$i] . "'>";
+          echo "<div id='id$i'>"; 
           echo $submits[$i]; 
-          echo '</td>'; 
+          echo "</div>"; 
+          if ($submit['uid'] == $uid) echo "</a>"; 
+          echo "</td>"; 
           echo "<td style='width: $W2; '>"; 
-          $submit = vj_get_submit_detail_by_sid($submits[$i], 'status_error_handler'); 
           if ($submit['uid'] == 0) $username = 'Guest'; 
           else
           {
@@ -170,7 +176,7 @@ function updatePage() {
     if(xmlHttps.readyState == 4) {
 	// var ar = eval(xmlHttps.response); 
 	// document.write(ar[1][1]); 
-	var a = xmlHttps.response.split(","); 
+	var a = xmlHttps.response.split(",");
 	var j = 0; 
 	for (i=1; i<=len; i++) {
 	    document.getElementById('a' + i).innerHTML = a[++j]; 

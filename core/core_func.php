@@ -682,4 +682,10 @@ function vj_has_aced_by_tid_and_uid($tid, $uid, $error_handler = 'vj_error')
      }
 }
 
+function vj_get_sourcecode_classic_by_sid($sid, $error_handler = 'vj_error')
+{
+     $submit = vj_get_submit_detail_by_sid($sid, $error_handler); 
+     return vj_util_read_file_adapted(VJ_SOURCEDIR . $sid . '.' . $submit['type']); 
+}
+
 ?> 
