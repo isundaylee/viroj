@@ -85,7 +85,7 @@ int work()
           arr[i][strlen(name) - 4] = 0;
           strcat(cmd, arr[i]); 
           system(cmd); 
-          printf("%s\n", arr[i]);
+          printf("%s\n", cmd);
           break; 
      }
 
