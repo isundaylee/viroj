@@ -56,7 +56,7 @@ inline int GetMomeoryUsed(void) {
 	char ch[50];
 	sprintf(ch, "/proc/%d/statm", subpid);
 
-	FILE* tmp = fopen(ch, "r");
+    FILE* tmp = fopen(ch, "r");
 	int memory;
 	for (int i = 1; i <= 6; i++)
 		fscanf(tmp, "%d", &memory);
