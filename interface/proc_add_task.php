@@ -46,6 +46,12 @@ mkdir(VJ_TASKDIR . $code . '/data');
 
 move_uploaded_file($_FILES['file']['tmp_name'], './' . VJ_TASKDIR . $code . '/data/data.zip'); 
 
-system("unzip " . VJ_TASKDIR . $code . '/data/data.zip'); 
+system("ls"); 
+
+system("unzip " . VJ_TASKDIR . $code . '/data/data.zip -d ' . VJ_TASKDIR . $code . '/'); 
+
+vj_add_pending_task($code);
+
+vj_util_navigate('index.php', 'add_task_error_handler'); 
 
 ?>

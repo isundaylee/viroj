@@ -2,6 +2,44 @@
 
 require('../core/config.php');
 
+function vj_get_pending_tasks($error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler); 
+
+     $exp = "SELECT name FROM " . VJ_DB_PREFIX . "pending_tasks; "; 
+
+     $result = mysql_query($exp); 
+
+     if (!$result)
+     {
+          call_user_func($error_handler, 'Database opertion failed. '); 
+          return; 
+     }
+
+     $tot = 0; 
+     
+     while($row = mysql_fetch_array($result))
+     {
+          ++$tot; 
+          $ans[$tot] = $row['name']; 
+     }
+
+     return $ans; 
+}
+
+function vj_add_pending_task($tskname, $error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler); 
+
+     $exp = "INSERT INTO " . VJ_DB_PREFIX . "pending_tasks (name) VALUES ('$tskname'); "; 
+
+     if (!mysql_query($exp))
+     {
+          call_user_func($error_handler, 'Database operation failed. ' . mysql_error()); 
+          return; 
+     }
+}
+
 function vj_get_task_types()
 {
      return array('acm'); 

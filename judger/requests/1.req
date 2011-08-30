@@ -1,4 +1,4 @@
-source=../source/11.cpp
+source=../source/1.cpp
 lang=cpp
 type=acm
 datanum=3
