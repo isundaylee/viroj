@@ -27,13 +27,49 @@ $ssstyle = VJ_SECTIONTITLE_STYLE;
 <div>
 &nbsp; <br />
 <form action="proc_util_remove_task.php" method="get">
-  TID: <input type="text" name="tid" />
+  Title: <input type="label" value="" id="f1title" readonly />
+  <br />
+  TID: <input type="text" name="tid" oninput="inquireTitle(this.value); " />
+  <br />
   <input type="submit" value="Remove" />
 </form>
 </div>
 
-<?php
+<script type="text/javascript">
 
-?>
+var xmlHttps = null; 
+try {
+    xmlHttps = new XMLHttpRequest(); 
+} catch (e) {
+    try {
+	xmlHttps = new ActiveXObject("Msxml2.XMLHTTP"); 
+    } catch (e) {
+	try {
+	    xmlHttps = new ActiveXObject("Microsoft.XMLHTTP"); 
+	} catch (failed) {
+	    xmlHttps = null; 
+	}
+    }
+}
+
+if (xmlHttps == null) alert('Error creating xmlHttps'); 
+
+function receivedTitle()
+{
+    if (xmlHttps.readyState == 4)
+    {
+	document.getElementById('f1title').value = xmlHttps.response; 
+    }
+}
+
+function inquireTitle(a)
+{
+    var url = "util_get_task_title.php?tid=" + a; 
+    xmlHttps.open("GET", url, true); 
+    xmlHttps.onreadystatechange = receivedTitle; 
+    xmlHttps.send(); 
+}
+
+</script>
 
 </div>

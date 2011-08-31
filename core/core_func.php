@@ -454,7 +454,7 @@ function vj_get_tasks($lb, $ub, $error_handler)
      return $ans; 
 }
 
-function vj_get_task_detail_by_tid($tid, $error_handler = 'vj_error')
+function vj_get_task_detail_by_tid($tid, $error_handler = 'vj_error', $ereturn = false)
 {
      $con = vj_get_connection($error_handler); 
 
@@ -471,6 +471,10 @@ function vj_get_task_detail_by_tid($tid, $error_handler = 'vj_error')
      }
 
      $name = $row['name'];
+     $task['name'] = $name; 
+     $task['title'] = $row['title']; 
+
+     if (ereturn) return $task; 
 
      $taskroot = VJ_TASKDIR . $name . '/';
 
@@ -485,8 +489,6 @@ function vj_get_task_detail_by_tid($tid, $error_handler = 'vj_error')
           return; 
      }
 
-     $task['name'] = $name; 
-     $task['title'] = $row['title']; 
      $task['desc'] = vj_util_read_file_adapted($taskroot . 'desc.txt'); 
      $task['input'] = vj_util_read_file_adapted($taskroot . 'input.txt'); 
      $task['output'] = vj_util_read_file_adapted($taskroot . 'output.txt'); 
