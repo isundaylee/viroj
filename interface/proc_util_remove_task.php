@@ -3,6 +3,8 @@
 require_once('config.php'); 
 require_once(VJ_CORE); 
 
+include('admin_validate.php'); 
+
 if (!isset($_GET['tid']))
 {
      vj_error('No tid specified. '); 
