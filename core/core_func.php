@@ -252,7 +252,6 @@ function vj_util_read_file_full_adapted($filename, $error_handler = 'vj_error', 
 
 function vj_util_adapt($str, $opt = Array())
 {
-     $str = str_replace("&", '&amp;', $str);
      $str = str_replace("\n", '<br />', $str);
 
      foreach ($opt as $i => $j) $str = str_replace($i, $j, $str); 
@@ -266,6 +265,7 @@ function vj_util_full_adapt($str, $opt = array())
      $str = str_replace(" ", '&nbsp;', $str); 
      $str = str_replace("<", '&lt;', $str);
      $str = str_replace(">", '&gt;', $str);
+     $str = str_replace("&", '&amp;', $str);
 
      foreach ($opt as $i => $j) $str = str_replace($i, $j, $str); 
 
