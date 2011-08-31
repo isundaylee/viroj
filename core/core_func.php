@@ -240,14 +240,14 @@ function vj_util_read_file($filename, $error_handler = 'vj_error')
      return $content; 
 }
 
-function vj_util_read_file_adapted($filename, $error_handler = 'vj_error')
+function vj_util_read_file_adapted($filename, $error_handler = 'vj_error', $extra = array())
 {
-     return vj_util_adapt(vj_util_read_file($filename, $error_handler)); 
+     return vj_util_adapt(vj_util_read_file($filename, $error_handler), $extra); 
 }
 
-function vj_util_read_file_full_adapted($filename, $error_handler = 'vj_error')
+function vj_util_read_file_full_adapted($filename, $error_handler = 'vj_error', $extra = array())
 {
-     return vj_util_full_adapt(vj_util_read_file($filename, $error_handler)); 
+     return vj_util_full_adapt(vj_util_read_file($filename, $error_handler), $extra); 
 }
 
 function vj_util_adapt($str, $opt = Array())
