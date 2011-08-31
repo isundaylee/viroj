@@ -41,7 +41,11 @@ foreach ($tasks as $i)
           echo "&nbsp; "; 
           echo "<a href='proc_util_decline_pending_task.php?ptid=$ptid'>Decline</a>"; 
      }
-     else echo "Validation failed. "; 
+     else
+     {
+          $ptid = $i['ptid']; 
+          echo "<a href='proc_util_decline_pending_task.php?ptid=$ptid'>Decline</a>"; 
+     }
      echo "</td></tr>"; 
 }
 

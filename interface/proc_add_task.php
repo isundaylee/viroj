@@ -50,7 +50,9 @@ system("ls");
 
 system("unzip " . VJ_TASKDIR . $code . '/data/data.zip -d ' . VJ_TASKDIR . $code . '/'); 
 
-vj_add_pending_task($code);
+$title = $_POST['title']; 
+
+vj_add_pending_task($code, $title);
 
 vj_util_navigate('index.php', 'add_task_error_handler'); 
 

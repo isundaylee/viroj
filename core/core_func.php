@@ -102,11 +102,11 @@ function vj_get_pending_task_by_ptid($ptid, $error_handler = 'vj_error')
      return $row; 
 }
 
-function vj_add_pending_task($tskname, $error_handler = 'vj_error')
+function vj_add_pending_task($tskname, $title, $error_handler = 'vj_error')
 {
      $con = vj_get_connection($error_handler); 
 
-     $exp = "INSERT INTO " . VJ_DB_PREFIX . "pending_tasks (name) VALUES ('$tskname'); "; 
+     $exp = "INSERT INTO " . VJ_DB_PREFIX . "pending_tasks (name, title) VALUES ('$tskname', '$title'); "; 
 
      if (!mysql_query($exp))
      {
