@@ -15,6 +15,9 @@ $width = VJ_SUBFRAME_WIDTH;
 <div style="margin: auto; width: <?php echo $width; ?>; ">
 <div style="<?php echo $subtitle_style; ?>"><?php echo $task['title']; ?></div>
 <hr />
+
+<div style="<?php echo $sectiontitle_style; ?>; text-align: left">Description</div>
+&nbsp; <br />
 <div style="<?php echo $style; ?>"><?php echo $task['desc']; ?></div>
 </div>
 
@@ -45,7 +48,8 @@ $width = VJ_SUBFRAME_WIDTH;
 &nbsp; <br /><hr />
 
 <div style="float: left; width: <?php echo $width; ?>; ">
-<div style="<?php echo $sectiontitle_style; ?>">Data Limit</div>
+<div style="<?php echo $sectiontitle_style; ?>; text-align: left">Data Limit</div>
+&nbsp; <br />
 <div style="<?php echo $style; ?>"><?php echo $task['limit']; ?></div>
 </div>
 
