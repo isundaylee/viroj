@@ -887,4 +887,29 @@ function vj_validate_pending_task($ptid, $error_handler = 'vj_error')
      return TRUE; 
 }
 
+function vj_remove_task_by_tid($tid, $error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler); 
+
+     $exp = "DELETE FROM " . VJ_DB_PREFIX . "tasks WHERE tid=$tid; "; 
+
+     $result = mysql_query($exp); 
+
+     if (!$result)
+     {
+          call_user_func($error_handler, 'Could not delete from tasks table. '); 
+          return; 
+     }
+
+     $exp = "DELETE FROM " . VJ_DB_PREFIX . "submits WHERE tid=$tid; "; 
+
+     $result = mysql_query($exp); 
+
+     if (!$result)
+     {
+          call_user_func($error_handler, 'Could not delete submits info. '); 
+          return; 
+     }
+}
+
 ?> 
