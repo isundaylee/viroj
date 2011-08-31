@@ -245,18 +245,28 @@ function vj_util_read_file_adapted($filename, $error_handler = 'vj_error')
      return vj_util_adapt(vj_util_read_file($filename, $error_handler)); 
 }
 
+function vj_util_read_file_full_adapted($filename, $error_handler = 'vj_error')
+{
+     return vj_util_full_adapt(vj_util_read_file($filename, $error_handler)); 
+}
+
 function vj_util_adapt($str)
 {
      $str = str_replace("&", '&amp;', $str);
-     $str = str_replace(" ", '&nbsp;', $str); 
-     $str = str_replace("<", '&lt;', $str);
-     $str = str_replace(">", '&gt;', $str);
-     $str = str_replace('"', '&quot;', $str);
      $str = str_replace("\n", '<br />', $str);
 
      return $str; 
 }
 
+function vj_util_full_adapt($str)
+{
+     $str = str_replace('"', '&quot;', $str);
+     $str = str_replace(" ", '&nbsp;', $str); 
+     $str = str_replace("<", '&lt;', $str);
+     $str = str_replace(">", '&gt;', $str);
+
+     return vj_util_adapt($str); 
+}
 
 function vj_login($username, $password, $error_handler = 'vj_error')
 {
@@ -860,7 +870,7 @@ function vj_has_aced_by_tid_and_uid($tid, $uid, $error_handler = 'vj_error')
 function vj_get_sourcecode_classic_by_sid($sid, $error_handler = 'vj_error')
 {
      $submit = vj_get_submit_detail_by_sid($sid, $error_handler); 
-     return vj_util_read_file_adapted(VJ_SOURCEDIR . $sid . '.' . $submit['type']); 
+     return vj_util_read_file_full_adapted(VJ_SOURCEDIR . $sid . '.' . $submit['type']); 
 }
 
 function vj_validate_pending_task($ptid, $error_handler = 'vj_error')
