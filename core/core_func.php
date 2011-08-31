@@ -2,11 +2,61 @@
 
 require('../core/config.php');
 
+function vj_accept_pending_task($ptid, $error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler); 
+
+     $pt = vj_get_pending_task_by_ptid($ptid, $error_handler); 
+
+     $name = $pt['name']; 
+     $title = $pt['title']; 
+     $exp = "INSERT INTO " . VJ_DB_PREFIX . "tasks (name, title) VALUES ('$name', '$title'); "; 
+
+     $result = mysql_query($exp); 
+
+     if (!$result)
+     {
+          call_user_func($error_handler, 'Database insertion failed. '); 
+          return;
+     }
+
+     $exp = "DELETE FROM " . VJ_DB_PREFIX . "pending_tasks WHERE ptid=$ptid; "; 
+     
+     $result = mysql_query($exp); 
+
+     if (!$result)
+     {
+          call_user_func($error_handler, 'Database deletion failed. '); 
+          return; 
+     }
+}
+
+function vj_decline_pending_task($ptid, $error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler); 
+
+     $pt = vj_get_pending_task_by_ptid($ptid); 
+
+     $cmd = "rm -rf " . VJ_TASKDIR . $pt['name']; 
+
+     system($cmd);
+
+     $exp = "DELETE FROM " . VJ_DB_PREFIX . "pending_tasks WHERE ptid=$ptid; "; 
+
+     $result = mysql_query($exp); 
+
+     if (!$result)
+     {
+          call_user_func($error_handler, 'Database deletion failed. '); 
+          return; 
+     }
+}
+
 function vj_get_pending_tasks($error_handler = 'vj_error')
 {
      $con = vj_get_connection($error_handler); 
 
-     $exp = "SELECT name FROM " . VJ_DB_PREFIX . "pending_tasks; "; 
+     $exp = "SELECT * FROM " . VJ_DB_PREFIX . "pending_tasks; "; 
 
      $result = mysql_query($exp); 
 
@@ -21,10 +71,35 @@ function vj_get_pending_tasks($error_handler = 'vj_error')
      while($row = mysql_fetch_array($result))
      {
           ++$tot; 
-          $ans[$tot] = $row['name']; 
+          $ans[$tot] = $row; 
      }
 
      return $ans; 
+}
+
+function vj_get_pending_task_by_ptid($ptid, $error_handler = 'vj_error')
+{
+     $con = vj_get_connection($error_handler); 
+
+     $exp = "SELECT * FROM " . VJ_DB_PREFIX . "pending_tasks WHERE ptid=" . $ptid . ";";
+
+     $result = mysql_query($exp); 
+
+     if (!$result)
+     {
+          call_user_func($error_handler, 'Database operation failed. '); 
+          return; 
+     }
+
+     $row = mysql_fetch_array($result); 
+
+     if (!$row)
+     {
+          call_user_func($error_handler, 'No such pending task exists. '); 
+          return; 
+     }
+
+     return $row; 
 }
 
 function vj_add_pending_task($tskname, $error_handler = 'vj_error')
@@ -201,6 +276,7 @@ function vj_login($username, $password, $error_handler = 'vj_error')
      {
           setcookie('vj_username', $username); 
           setcookie('vj_uid', $row['uid']); 
+          if ($row['role'] == VJ_ADMIN_ROLE_ID) setcookie('vj_admin', 1); 
      }
      else 
      {
@@ -231,6 +307,7 @@ function vj_logout($error_handler = 'vj_error')
 
      setcookie('vj_username', ''); 
      setcookie('vj_uid', '');
+     setcookie('vj_admin', ''); 
 }
 
 function vj_register($username, $password, $error_handler = 'vj_error')
@@ -779,6 +856,35 @@ function vj_get_sourcecode_classic_by_sid($sid, $error_handler = 'vj_error')
 {
      $submit = vj_get_submit_detail_by_sid($sid, $error_handler); 
      return vj_util_read_file_adapted(VJ_SOURCEDIR . $sid . '.' . $submit['type']); 
+}
+
+function vj_validate_pending_task($ptid, $error_handler = 'vj_error')
+{
+     $pt = vj_get_pending_task_by_ptid($ptid, $error_handler);
+
+     $fp = fopen(VJ_TASKDIR . $pt['name'] . "/.conf", "r"); 
+
+     if (!$fp)
+     {
+          call_user_func($error_handler, 'Could not open .conf file'); 
+          return FALSE; 
+     }
+
+     while (!feof($fp))
+     {
+          $line = fgets($fp); 
+          if (strpos($line, '=') == FALSE)
+          {
+               sscanf($line, "%s%s%s%s", $a, $b, $in, $out); 
+               if (!file_exists(VJ_TASKDIR . $pt['name'] . "/" . $in) ||
+                   !file_exists(VJ_TASKDIR . $pt['name'] . "/" . $out))
+               {
+                    return FALSE; 
+               }
+          }
+     }
+
+     return TRUE; 
 }
 
 ?> 

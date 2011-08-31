@@ -14,4 +14,6 @@ define('VJ_REPORTS_DIR', '../report/');
 define('VJ_TASKDIR', '../taskdir/'); 
 define('VJ_SOURCEDIR', '../source/'); 
 
+define('VJ_ADMIN_ROLE_ID', 1); 
+
 ?>
