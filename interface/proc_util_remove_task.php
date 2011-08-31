@@ -15,4 +15,6 @@ $tid = $_GET['tid'];
 
 vj_remove_task_by_tid($tid); 
 
+vj_util_navigate('admin.php'); 
+
 ?>

@@ -20,9 +20,9 @@ $W3 = 400;
 
 <table>
 <tr>
-<th style="<?php echo $style; ?>;" width="<?php echo $W1; ?>">A</th>
-<th style="<?php echo $style; ?>;" width="<?php echo $W2; ?>">B</th>
-<th style="<?php echo $style; ?>;" width="<?php echo $W3; ?>">C</th>
+<th style="<?php echo $style; ?>;" width="<?php echo $W1; ?>">Code</th>
+<th style="<?php echo $style; ?>;" width="<?php echo $W2; ?>">Title</th>
+<th style="<?php echo $style; ?>;" width="<?php echo $W3; ?>">Actions</th>
 </tr>
 
 <?php
