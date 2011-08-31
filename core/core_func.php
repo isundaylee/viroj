@@ -506,7 +506,7 @@ function vj_get_task_detail_by_tid($tid, $error_handler = 'vj_error', $ereturn =
           return; 
      }
 
-     $extra = array('$TASKROOT$' => VJ_TASKDIR . $name . '/'); 
+     $extra = array('$TASKROOT$' => VJ_TASKDIR_HTML . $name . '/'); 
 
      $task['desc'] = vj_util_read_file_adapted($taskroot . 'desc.txt', 'vj_error', $extra); 
      $task['input'] = vj_util_read_file_adapted($taskroot . 'input.txt', 'vj_error', $extra); 

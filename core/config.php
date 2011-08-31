@@ -12,6 +12,7 @@ define('VJ_TASKDIR_AS_JUDGER', '../taskdir/');
 define('VJ_SOURCE_AS_JUDGER', '../source/'); 
 define('VJ_REPORTS_DIR', '../report/'); 
 define('VJ_TASKDIR', '../taskdir/'); 
+define('VJ_TASKDIR_HTML', 'taskdir_ln/'); 
 define('VJ_SOURCEDIR', '../source/'); 
 
 define('VJ_ADMIN_ROLE_ID', 1); 
