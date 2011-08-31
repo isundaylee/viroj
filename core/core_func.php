@@ -250,20 +250,24 @@ function vj_util_read_file_full_adapted($filename, $error_handler = 'vj_error')
      return vj_util_full_adapt(vj_util_read_file($filename, $error_handler)); 
 }
 
-function vj_util_adapt($str)
+function vj_util_adapt($str, $opt = Array())
 {
      $str = str_replace("&", '&amp;', $str);
      $str = str_replace("\n", '<br />', $str);
 
+     foreach ($opt as $i => $j) $str = str_replace($i, $j, $str); 
+     
      return $str; 
 }
 
-function vj_util_full_adapt($str)
+function vj_util_full_adapt($str, $opt = array())
 {
      $str = str_replace('"', '&quot;', $str);
      $str = str_replace(" ", '&nbsp;', $str); 
      $str = str_replace("<", '&lt;', $str);
      $str = str_replace(">", '&gt;', $str);
+
+     foreach ($opt as $i => $j) $str = str_replace($i, $j, $str); 
 
      return vj_util_adapt($str); 
 }
@@ -502,12 +506,14 @@ function vj_get_task_detail_by_tid($tid, $error_handler = 'vj_error', $ereturn =
           return; 
      }
 
-     $task['desc'] = vj_util_read_file_adapted($taskroot . 'desc.txt'); 
-     $task['input'] = vj_util_read_file_adapted($taskroot . 'input.txt'); 
-     $task['output'] = vj_util_read_file_adapted($taskroot . 'output.txt'); 
-     $task['sinput'] = vj_util_read_file_adapted($taskroot . 'sinput.txt'); 
-     $task['soutput'] = vj_util_read_file_adapted($taskroot . 'soutput.txt'); 
-     $task['limit'] = vj_util_read_file_adapted($taskroot . 'limit.txt'); 
+     $extra = array('$TASKROOT$' => VJ_TASKDIR . $name . '/'); 
+
+     $task['desc'] = vj_util_read_file_adapted($taskroot . 'desc.txt', $extra); 
+     $task['input'] = vj_util_read_file_adapted($taskroot . 'input.txt', $extra); 
+     $task['output'] = vj_util_read_file_adapted($taskroot . 'output.txt', $extra); 
+     $task['sinput'] = vj_util_read_file_adapted($taskroot . 'sinput.txt', $extra); 
+     $task['soutput'] = vj_util_read_file_adapted($taskroot . 'soutput.txt', $extra); 
+     $task['limit'] = vj_util_read_file_adapted($taskroot . 'limit.txt', $extra); 
 
      return $task;
 }
