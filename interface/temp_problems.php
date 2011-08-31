@@ -17,13 +17,14 @@ if ($uid == 0)
      $uid = -1; 
 }
 
+$style = VJ_CONTENT_STYLE; 
+
 ?>
 
 <div style="margin: auto; width: <?php echo VJ_SUBFRAME_WIDTH; ?>; ">
 <?php
      if ($_GET['errmsg'] != '')
      {
-          $style = VJ_CONTENT_STYLE; 
           echo '<div style="color: red; text-align: center; ' . $style .'">';
           echo 'Error: ' . $_GET['errmsg'] . " You're now at page 1. "; 
           echo '<hr /></div>';
