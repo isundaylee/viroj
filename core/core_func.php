@@ -508,12 +508,12 @@ function vj_get_task_detail_by_tid($tid, $error_handler = 'vj_error', $ereturn =
 
      $extra = array('$TASKROOT$' => VJ_TASKDIR . $name . '/'); 
 
-     $task['desc'] = vj_util_read_file_adapted($taskroot . 'desc.txt', $extra); 
-     $task['input'] = vj_util_read_file_adapted($taskroot . 'input.txt', $extra); 
-     $task['output'] = vj_util_read_file_adapted($taskroot . 'output.txt', $extra); 
-     $task['sinput'] = vj_util_read_file_adapted($taskroot . 'sinput.txt', $extra); 
-     $task['soutput'] = vj_util_read_file_adapted($taskroot . 'soutput.txt', $extra); 
-     $task['limit'] = vj_util_read_file_adapted($taskroot . 'limit.txt', $extra); 
+     $task['desc'] = vj_util_read_file_adapted($taskroot . 'desc.txt', , $extra); 
+     $task['input'] = vj_util_read_file_adapted($taskroot . 'input.txt', , $extra); 
+     $task['output'] = vj_util_read_file_adapted($taskroot . 'output.txt', , $extra); 
+     $task['sinput'] = vj_util_read_file_adapted($taskroot . 'sinput.txt', , $extra); 
+     $task['soutput'] = vj_util_read_file_adapted($taskroot . 'soutput.txt', , $extra); 
+     $task['limit'] = vj_util_read_file_adapted($taskroot . 'limit.txt', , $extra); 
 
      return $task;
 }
