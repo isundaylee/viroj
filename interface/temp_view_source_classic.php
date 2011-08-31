@@ -11,7 +11,7 @@ else $s = $_GET['sid'];
 
 $submit = vj_get_submit_detail_by_sid($s); 
 
-if ($submit['uid'] != $uid) 
+if (!vj_is_admin() && $submit['uid'] != $uid) 
 {
      vj_error('Permission denied. '); 
      return; 

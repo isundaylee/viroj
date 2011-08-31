@@ -933,4 +933,9 @@ function vj_remove_task_by_tid($tid, $error_handler = 'vj_error')
      }
 }
 
+function vj_is_admin()
+{
+     return (isset($_COOKIE['vj_admin']) && ($_COOKIE['vj_admin'] == 1)); 
+}
+
 ?> 
