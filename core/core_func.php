@@ -262,12 +262,11 @@ function vj_util_adapt($str, $opt = Array())
 
 function vj_util_full_adapt($str, $opt = array())
 {
-     $str = vj_util_adapt($str); 
-
      $str = str_replace('"', '&quot;', $str);
      $str = str_replace(" ", '&nbsp;', $str); 
      $str = str_replace("<", '&lt;', $str);
      $str = str_replace(">", '&gt;', $str);
+     $str = str_replace("\n", '<br />', $str);
 
      foreach ($opt as $i => $j) $str = str_replace($i, $j, $str); 
 
