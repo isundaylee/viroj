@@ -16,14 +16,14 @@ foreach ($_POST as $i)
      }
 }
 
-// if($_FILES['file']["error"] > 0)
-// {
-//   die('File upload error occurred'); 
-// }
+if($_FILES['file']["error"] > 0)
+{
+     die('File upload error occurred'); 
+}
 
 if (file_exists(VJ_TASKDIR . $_POST['code']))
 {
-     // die('Task with the same code already exists' ); 
+     die('Task with the same code already exists' ); 
 }
 else mkdir(VJ_TASKDIR . $_POST['code']);
 
