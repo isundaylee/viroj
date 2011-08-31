@@ -466,6 +466,7 @@ function vj_get_task_detail_by_tid($tid, $error_handler = 'vj_error', $ereturn =
      
      if (!$row)
      {
+          if (ereturn) return array('title' => 'NOT FOUND'); 
           call_user_func($error_handler, 'Task with requested tid could not be found. Please check it.  '); 
           return; 
      }

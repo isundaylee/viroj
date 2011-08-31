@@ -27,8 +27,7 @@ $ssstyle = VJ_SECTIONTITLE_STYLE;
 <div>
 &nbsp; <br />
 <form action="proc_util_remove_task.php" method="get">
-  Title: <input type="label" value="" id="f1title" readonly />
-  <br />
+  <div id="f1title" style="<?php echo $style; ?>">&nbsp; </div>
   TID: <input type="text" name="tid" oninput="inquireTitle(this.value); " />
   <br />
   <input type="submit" value="Remove" />
@@ -58,7 +57,7 @@ function receivedTitle()
 {
     if (xmlHttps.readyState == 4)
     {
-	document.getElementById('f1title').value = xmlHttps.response; 
+	document.getElementById('f1title').innerHTML = 'Title: ' + xmlHttps.response; 
     }
 }
 
