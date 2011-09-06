@@ -176,7 +176,7 @@ function updatePage() {
     if(xmlHttps.readyState == 4) {
 	// var ar = eval(xmlHttps.response); 
 	// document.write(ar[1][1]); 
-	var a = xmlHttps.response.split(",");
+	var a = xmlHttps.responseText.split(",");
 	var j = 0; 
 	for (i=1; i<=len; i++) {
 	    document.getElementById('a' + i).innerHTML = a[++j]; 
